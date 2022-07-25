@@ -1,4 +1,1 @@
-- create list pages
-- create side menu for nlp course
-- Mobile adaptation
-- seo
+# New frontend
