@@ -1,0 +1,13 @@
+.sx, .sx p, .sx span, .sx a {
+    font-size: 0.9em;
+}
+
+.md, .md p, .md span, .md a {
+    font-size: 14px;
+}
+
+
+.comic, .comic p {
+    font-size: 16px !important;
+    font-family: "Comic Neue", "Arial";
+}

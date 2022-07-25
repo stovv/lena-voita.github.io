@@ -1,0 +1,35 @@
+.root {
+    font-size: 12px;
+    color: var(--dark-blue);
+    padding: 3px;
+    white-space: nowrap;
+    border-radius: 3px;
+    transition: none;
+}
+
+.root::after {
+    display: none;
+}
+
+.root:hover {
+    color: var(--accent);
+}
+
+
+
+.green {
+    background-color: var(--light-green);
+}
+
+.yellow {
+    background-color: var(--yellow);
+}
+
+.clickable {
+    transition: all .3s ease-in-out;
+}
+
+.clickable:hover {
+    color: var(--link-color-hover);
+    opacity: 0.5;
+}

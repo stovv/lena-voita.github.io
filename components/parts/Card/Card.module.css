@@ -1,0 +1,12 @@
+.root {
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    padding: 14px;
+}
+
+.root:hover {
+    transform: translateY(-5px);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

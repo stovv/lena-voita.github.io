@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+      p {
+          font-size: 2em;
+          max-width: 80%;
+      }
+
+      a {
+          text-decoration: none;
+          background-image: linear-gradient(currentColor, currentColor);
+          background-position: 0% 100%;
+          background-repeat: no-repeat;
+          background-size: 0% 4px;
+          transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
+      }
+
+      a:hover,
+      a:focus {
+          text-decoration: none;
+          background-size: 100% 4px;
+      }
+
+
+
+
+
+      a {
+          /*
+          @extend base-font;
+          color: var(--link-color);
+          text-decoration: none;
+          position: relative;
+          transition: .3s color ease-in-out;
+           */
+          cursor: pointer;
+          text-decoration: none;
+          background-image: linear-gradient(var(--link-color), var(--link-color));
+          background-position: 0% 100%;
+          background-repeat: no-repeat;
+          background-size: 0% 4px;
+          transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
+      }
+
+      a:hover:after {
+          text-decoration: none;
+          background-size: 100% 4px;
+      }
+
+      /*
+      a:visited {
+          color: var(--link-color-visited);
+      }
+
+      a:hover {
+          color: var(--link-color-hover);
+          text-decoration: none;
+      }
+
+       */
+
+      /*
+      a:after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 0;
+          border-bottom: 2px solid var(--link-color);
+          transition: .3s width ease-in-out;
+      }
+
+       */
+  </style>
+  <title>Title</title>
+</head>
+<body>
+<article class="content">
+<p>... and here is some text. This text shows how <a href="https://cssanimation.rocks/#">CSS animation can help us make links be more fun and useful</a>...</p>
+</article>
+</body>
+</html>

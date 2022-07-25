@@ -1,0 +1,82 @@
+:root {
+    /* page */
+    --page-background: #FDFDFD;
+
+    /* text */
+    --text-color: #111;
+
+    /* link */
+    --link-color: #2a7ae2;
+    --link-color-hover: #111;
+    --link-color-visited: var(--link-color);
+    --link-color-disabled: var(--light-gray);
+    --link-border-default: linear-gradient(var(--link-color), var(--link-color));
+    --link-border-header: linear-gradient(var(--header-link-color), var(--header-link-color));
+    --link-border-none: none;
+
+    /* accent */
+    --accent: #2a7ae2;
+
+    /* common */
+    --gray: #424242;
+    --red: #ff0000;
+    --green: #92bf32;
+    --light-gray: #888;
+    --super-light-gray: rgba(45, 45, 45, 0.1);
+    --bold-gray: #999;
+    --dark-blue: rgb(0, 0, 139);
+    --yellow: #f0d043;
+    --light-green: #c7db4d;
+
+
+    /* header */
+    --header-border-top-color: var(--gray);
+    --header-border-bottom-color: #e8e8e8;
+    --header-link-color: var(--gray);
+    --header-logo-color: var(--gray);
+    --header-link-mobile-color: #fff;
+    --header-burger-icon: var(--header-link-color);
+    --header-close-icon: #fff;
+    --header-burger-icon-active: var(--accent);
+    --navigation-mobile-background: var(--gray);
+    --footer-border-top: #e8e8e8;
+
+    /* card */
+    --card-border-color: var(--light-gray);
+    --course-card-bg: #f5f5f5;
+
+    /* button */
+    --button-bg: #d3e3ad;
+    --button-text: var(--gray);
+    --button-color-hover: --button-text;
+    --button-bg-hover: var(--light-green);
+
+    /* content table */
+    --toc-bg: #fafafa;
+    --tok-border-color: var(--green);
+}
+
+
+
+/*
+@media (prefers-color-scheme: dark) {
+    :root {
+            /* page dark TODO: invert
+    --page-background: #222831;
+
+    /* text dark TODO: invert
+    --text-color: #fff;
+
+    /* link dark TODO: invert
+    --link-color: #2a7ae2;
+    --link-color-hover: #fff;
+    --link-color-visited: var(--link-color);
+
+    /* header dark
+    --header-link-color: var(--text-color);
+    --header-logo-color: var(--text-color);
+    }
+}
+*/
+
+

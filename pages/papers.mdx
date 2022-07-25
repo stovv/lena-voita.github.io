@@ -1,0 +1,14 @@
+---
+layout: base
+title: Publications
+---
+
+import config from '~/config';
+
+<>
+  {
+    config.papers.map(
+      ({title, ...paper}) => <Publication  {...paper} style={{ marginBottom: '20px' }}>{title}</Publication>
+    )
+  }
+</>

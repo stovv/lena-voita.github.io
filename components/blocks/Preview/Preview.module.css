@@ -1,0 +1,20 @@
+.bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.buttons {
+    display: flex;
+    width: min-content;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+.heading {
+    font-weight: 100;
+}
+
+.year {
+    color: var(--light-gray);
+}

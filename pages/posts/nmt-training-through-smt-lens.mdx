@@ -1,0 +1,36 @@
+---
+layout: post
+title: NMT Training through the Lens of SMT
+image: /posts/nmt-training-through-smt-lens/morda-min.webp
+menu: true
+order: 0
+date: 2021-09-01
+paper: https://arxiv.org/abs/2109.01396
+---
+
+<Preview>
+  <Cl size="md">
+    This is a post for the EMNLP 2021 paper
+    [Language Modeling, Lexical Translation, Reordering: The Training Process of NMT through the Lens of Classical SMT.](https://arxiv.org/abs/2109.01396)
+  </Cl>
+  <SideContainer>
+    <Main md>
+      In SMT, model competences are modelled with distinct models.
+      In NMT, the whole translation task is modelled
+      with a single neural network.
+      How and when does NMT get to learn all the competences? We show that
+      - during training, NMT undergoes three different stages:
+      - target-side language modeling,
+      - learning how to use source and approaching word-by-word translation,
+      - refining translations, visible by increasingly complex reorderings,
+      but almost invisible to standard metrics (e.g. BLEU);
+    </Main>
+    <Side>
+      ![morda-min](/posts/nmt-training-through-smt-lens/morda-min.webp)
+    </Side>
+  </SideContainer>
+  - not only this is fun, but it can also help in practice! For example, in settings where
+  data complexity matters, such as non-autoregressive NMT.
+</Preview>
+
+

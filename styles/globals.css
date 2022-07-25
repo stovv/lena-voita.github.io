@@ -1,16 +1,25 @@
-html,
+/* CSS reset https://raw.githubusercontent.com/elad2412/the-new-css-reset */
+/*
+Chrome, Edge: version 88+
+FireFox: version 84+
+Safari/iOS browsers: version 14+
+Opera: version 75+
+Samsung Browser: version 15+
+*/
+@import 'reset.css';
+@import 'colors.css';
+@import 'font.css';
+@import '../node_modules/react-highlight-code/dist/style.css';
+
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: var(--page-background);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+hr {
+    border-top: 1px solid var(--super-light-gray);
 }
 
-* {
-  box-sizing: border-box;
+.TL_word {
+    font-family: Helvetica;
 }

@@ -1,0 +1,31 @@
+---
+layout: post
+title: Source and Target Contributions to NMT Predictions
+description: Lena Voita's keynote at ACL 2021 workshop RepL4NLP and NAACL 2021 workshop DeeLIO.
+image: /posts/nmt-inside-out/morda_test.webp
+menu: true
+order: 2
+date: 2021-07-01
+---
+
+<Preview>
+  <Cl>
+    This is a post for the ACL 2021 paper
+    [Analyzing the Source and Target Contributions to Predictions in Neural Machine Translation.](https://arxiv.org/pdf/2010.10907.pdf)
+  </Cl>
+  <SideContainer>
+    <Main>
+      In NMT, each prediction is based on two types of context: the source and the prefix of the target sentence.
+      We show how to evaluate the relative contributions of source and target to NMT predictions and find that:
+      - models suffering from exposure bias are more prone to over-relying on target history (and hence to hallucinating) than
+      the ones where the exposure bias is mitigated;
+      - models trained with more data rely on the source more and do it more confidently;
+      - the training process is non-monotonic with several distinct stages.
+    </Main>
+    <Side>
+      <video width="100%" height="auto" loop autoPlay muted>
+        <source src="/posts/src-dst-nmt/src_dst_main.mp4" type="video/mp4"/>
+      </video>
+    </Side>
+  </SideContainer>
+</Preview>

@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap");
+@import 'colors.css';
+
+:root {
+    --fontFamily: Helvetica;
+}
+
+@define-placeholder base-font {
+     cursor: text;
+     position: relative;
+     color: var(--text-color);
+     //-webkit-font-smoothing: antialiased;
+     font-family: var(--fontFamily), Arial, sans-serif;
+}
+
+@define-placeholder default-margin {
+    margin-bottom: 15px;
+}
+
+
+/* Default font */
+p, span, label, li, ol, *::after, *::before {
+    @extend base-font;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+}
+p {
+    @extend default-margin;
+}
+
+.sm-font {
+    @extend base-font;
+    font-size: 14px;
+}
+
+
+/* Link font */
+a {
+    @extend base-font;
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+    background-image: var(--link-border-default);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    font-weight: 300;
+    transition: all .3s ease-in-out;
+}
+
+a:hover,
+a:focus {
+    color: var(--gray);
+    text-decoration: none;
+    background-size: 100% 2px;
+}
+
+/* Headings font */
+h1, h1 > span {
+    @extend base-font;
+    @extend default-margin;
+    font-size: 38px;
+    line-height: 1;
+}
+
+h2, h2 > span {
+    @extend base-font;
+    @extend default-margin;
+    font-size: 32px;
+}
+
+h3, h3 > span {
+    @extend base-font;
+    @extend default-margin;
+    font-size: 26px;
+}
+
+h4 {
+    @extend base-font;
+    @extend default-margin;
+    font-size: 20px;
+}
+
+h5 {
+    @extend base-font;
+    @extend default-margin;
+    font-size: 12px;
+}
+
+h6 {
+    @extend base-font;
+    @extend default-margin;
+    font-size: 12px;
+}
+
+
+strong {
+    font-weight: bold;
+}
+
+u {
+    color: var(--light-gray);
+    text-decoration: underline;
+}
+
+em {
+    font-style: italic;
+}
+
+ul {
+    @extend default-margin;
+    margin-left: 30px;
+    list-style: inside;
+}
+
+li {
+    display: list-item;
+    text-align: match-parent;
+}
+
+li:marker {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    white-space: pre;
+    text-transform: none;
+}

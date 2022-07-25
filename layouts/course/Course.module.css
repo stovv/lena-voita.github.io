@@ -1,0 +1,36 @@
+.root {
+    display: flex;
+    justify-content: left;
+    min-height: 80vh;
+}
+
+.root .left {
+    width: 270px;
+    background-color: var(--toc-bg);
+}
+
+.root main {
+    max-width: 800px;
+    min-width: 800px;
+}
+
+.root .wrapper {
+    display: flex;
+    width: calc(100% - 550px);
+    justify-content: center;
+    padding-top: 30px;
+}
+
+
+.root h3 {
+    font-weight: 300;
+}
+
+.root hr {
+    border-top: 4px solid var(--green);
+    margin: 16px 0;
+}
+
+.root code {
+    white-space: pre-wrap;
+}

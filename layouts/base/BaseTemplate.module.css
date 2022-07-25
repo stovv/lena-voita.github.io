@@ -1,0 +1,11 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.main {
+    max-width: 800px;
+    min-width: 800px;
+    min-height: 80vh;
+}

@@ -1,0 +1,5 @@
+.root {
+    background-color: var(--course-card-bg);
+    border-radius: 16px;
+    padding: 20px;
+}

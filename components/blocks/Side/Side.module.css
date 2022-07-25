@@ -1,0 +1,38 @@
+.root {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reversed {
+    flex-direction: row-reverse;
+}
+
+
+.main {
+    width: 100%;
+    max-width: 80%;
+    flex-shrink: 0;
+}
+
+.lg {
+    max-width: 90%;
+}
+
+.md {
+    max-width: 50%;
+}
+
+.sx {
+    max-width: 30%;
+}
+
+.side {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.reversed .side {
+    justify-content: flex-start;
+}
