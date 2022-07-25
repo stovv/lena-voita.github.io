@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "export": "next export",
     "update-reset-css": "wget https://raw.githubusercontent.com/elad2412/the-new-css-reset/main/css/reset.css -O ./styles/reset.css"
   },
   "dependencies": {
