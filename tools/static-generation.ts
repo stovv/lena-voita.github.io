@@ -59,12 +59,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // Server Side function will only start during the assembly of the project
     const files = await getMdxFiles();
     return {
-        paths: files.map((file) => ({
-            params: {
-                raw: file,
-                slug: file.replace('index.mdx', '').replace('.mdx', '').split('/'),
-            },
-        })),
+        paths: files
+            .filter((file) => file !== 'index.mdx')
+            .map((file) => ({
+                params: {
+                    raw: file,
+                    slug: file.replace('index.mdx', '').replace('.mdx', '').split('/'),
+                },
+            })),
         fallback: false,
     };
 };
