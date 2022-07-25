@@ -10,7 +10,7 @@ type CodeProps = {
 // https://highlightjs.readthedocs.io/en/latest/supported-languages.html
 const Code = ({ children, lang, className, ...props }: PropsWithChildren<CodeProps>) => {
     const Lang = lang ?? className?.replace?.('language-', '') ?? '';
-    return <HighCode codeValue={children} lang={Lang} langName={''} width={'100%'}/>;
+    return <HighCode codeValue={children} lang={Lang} langName={''} width={'100%'} />;
 };
 
 export default Code;

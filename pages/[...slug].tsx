@@ -12,7 +12,6 @@ import * as Layouts from '~/layouts';
 import MDXRemote from '~/components/parts/MDXRemote';
 import PageTemplate from '~/components/parts/PageTemplate';
 
-
 type CoursePageProps = SerializeReturnType<{
     layout?: keyof typeof Layouts;
     header?: boolean;
