@@ -7,6 +7,8 @@
 .root .left {
     width: 270px;
     background-color: var(--toc-bg);
+    z-index: 60;
+    transition: width .3s ease-in-out;
 }
 
 .root main {
@@ -19,10 +21,14 @@
     width: calc(100% - 550px);
     justify-content: center;
     padding-top: 30px;
+    transition: width .3s ease-in-out;
 }
 
+.root h2:not(:first-child) {
+    margin-top: 40px;
+}
 
-.root h3 {
+.root h3, .root h4 {
     font-weight: 300;
 }
 
@@ -33,4 +39,32 @@
 
 .root code {
     white-space: pre-wrap;
+}
+
+@media screen and (max-width: 1390px) {
+    .root main {
+        min-width: 300px;
+    }
+
+    .root .wrapper {
+        width: calc(100% - 250px)
+    }
+}
+
+
+@media screen and (max-width: 1135px) {
+    .root .left {
+        width: min-content;
+    }
+
+    .root .wrapper {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 910px) {
+    .root .wrapper {
+        width: calac(100vw - 60px);
+        padding: 30px 20px;
+    }
 }

@@ -5,20 +5,20 @@ title: NLP Course | For You
 
 
 <ContentTable>
-  - [**NLP Course** <Hl color="green">**| For You**</Hl>](#nlp-course-for-you)
+  - [**NLP Course** <Hl color="green">**| For You**</Hl> <Img src={'/nlp-course/ico/logo.webp'} style={{float: 'right', width: '24px'}}/>](#nlp-course-for-you)
   - [What's inside](#whats-inside-a-guide-to-your-adventure)
   - [Course](#course)
-    - Word Embeddings
-    - Text Classification
-    - Language Modeling
-    - Seq2seq and Attention
-    - Transfer Learning
-    - ...to be continued
-  - Supplementary
-    - Convolutional Networks
+    - [Word Embeddings](#preview-word-emb)
+    - [Text Classification](#preview-text-clf)
+    - [Language Modeling](#preview-lang-models)
+    - [Seq2seq and Attention](#preview-seq2seq-attn)
+    - [Transfer Learning](#preview-transfer)
+    - [...to be continued](#coming-soon)
+  - [Supplementary](#supplementary)
+    - [Convolutional Networks](#test)
 </ContentTable>
 
-# NLP Course <Hl color="green">| For You</Hl>
+<h1>NLP Course <Hl color="green">| For You</Hl></h1>
 
 <Cl comic>
   This is an extension to the (ML for)
@@ -27,9 +27,9 @@ title: NLP Course | For You
   For now, only part of the topics is likely to be covered here.
 </Cl>
 
-<SideContainer>
+<SideContainer md>
   <Main>
-    ### This new format of the course is designed for:
+    ### This new format of the course is designed<Ng/>for:
     - convenience
       <Cl comic>
         Easy to find, learn or recap  material (both standard and more advanced), and to
@@ -50,8 +50,48 @@ title: NLP Course | For You
       </Cl>
 
   </Main>
-  <Side>
+  <Side style={{padding: '0 10px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '5px'}}>
+    <Card rect color={'var(--green)'} style={{width: '100%'}} href={'#whats-inside-lectures'} right={(
+      <>
+        <Img src="/nlp-course/ico/paw_empty.webp" style={{ height: '18px' }} />
+        <Img src="/nlp-course/ico/dumpbell_empty.webp" style={{ height: '18px', margin: '5px 0' }} />
+        <Img src="/nlp-course/ico/analysis_empty.webp" style={{ height: '25px' }} />
+      </>
+    )}>
+      Lectures-blogs with
+      <br/><NgTab/><Cl comic>Interactive parts & Exercises</Cl>
+      <br/><NgTab/><Cl comic>Analysis and Interpretability</Cl>
+    </Card>
 
+    <Card rect href={'#whats-inside-lectures'}
+          color={'var(--green)'} style={{width: '100%'}}>
+      Seminars & Homeworks
+      <br/><NgTab/><Cl comic>notebooks in our 7.7k-☆ course repo</Cl>
+    </Card>
+
+    <Card rect href={'#whats-inside-research-thinking'}
+      color={'var(--yellow)'}
+      style={{width: '100%'}}
+      right={<Img src="/nlp-course/ico/bulb_empty.webp" style={{ height: '70px' }} />}>
+      Research Thinking
+      <br/><NgTab/><Cl comic>learn to ask right questions</Cl>
+    </Card>
+
+    <Card rect href={'#whats-inside-related-papers'}
+          color={'var(--violet)'}
+          style={{width: '100%'}}
+          right={<Img src="/nlp-course/ico/book_empty.webp" style={{ height: '70px' }} />}>
+      Related Papers
+      <br/><NgTab/><Cl comic>with summaries and explanations</Cl>
+    </Card>
+
+    <Card rect href={'#whats-inside-fun'}
+          color={'var(--blue)'}
+          style={{width: '100%', marginBottom: '20px'}}
+          right={<Img src="/nlp-course/ico/fun_empty.webp" style={{ height: '70px' }} />}>
+      Have Fun!
+      <br/><NgTab/><Cl comic>just fun</Cl>
+    </Card>
   </Side>
 </SideContainer>
 
@@ -76,87 +116,514 @@ title: NLP Course | For You
 
 # What's inside: A Guide to Your Adventure
 
-<Card style={{ marginTop: '20px' }} id={'whats-inside-lectures'}>
-  <SideContainer>
-    <Main md>
-      ## Lectures-blogs
-      <Cl comic>which I tried to make:</Cl>
-      - intuitive, clear and engaging;
-      - complete: full lecture and more
-      - up-to-date with the field.
-      ### Bonus:
-      - [Research Thinking](#whats-inside-research-thinking)
-      - [Related Papers](#whats-inside-related-papers)
-      - [Have Fun!](#whats-inside-fun)
+[//]: # (Lectures-blogs)
+<CourseBlock id={'whats-inside-lectures'}  divider={{ color: 'var(--green)' }}>
+  <CLeft>
+    ## Lectures-blogs
 
-      ## Seminars & Homeworks
+    which I tried to make:
+    - intuitive, clear and engaging;
+    - complete: full lecture and more
+    - up-to-date with the field.
+
+    ### Bonus:
+    - [Research Thinking](#whats-inside-research-thinking)
+    - [Related Papers](#whats-inside-related-papers)
+    - [Have Fun!](#whats-inside-fun)
+
+    ## Seminars & Homeworks
+    <Cl comic>
+      For each topic, you can take notebooks from <br/>
+      [our 7.7k-☆ course repo](https://github.com/yandexdataschool/nlp_course)
+    </Cl>
+    From 2020, both PyTorch and Tensorflow!
+  </CLeft>
+  <CRight>
+    <Card rect style={{ backgroundColor: '#fff', width: '100%', border: '1px var(--green) solid', marginBottom: '20px' }} color={'var(--green)'}>
+      <Img src={'/nlp-course/ico/paw_empty.webp'} style={{ height: '18px', float: 'left', width: '18px', marginRight: '10px' }}/>
+      <Img src={'/nlp-course/ico/dumpbell_empty.webp'} style={{ height: '18px', float: 'left', width: '18px', marginRight: '10px' }}/>
+
+      ###### Interactive parts & Exercises
+      <Cl comic>Often I ask you to go over "slides" visualizing some process, play with something or just think.</Cl>
+    </Card>
+
+    <Card rect style={{ backgroundColor: '#fff', width: '100%', border: '1px var(--green) solid' }} color={'var(--green)'}>
+      <Img src={'/nlp-course/ico/analysis_empty.webp'} style={{ height: '30px', float: 'left', width: '30px', marginRight: '10px' }}/>
+
+      ###### Analysis and Interpretability
       <Cl comic>
-        For each topic, you can take notebooks from <br/>
-        [our 7.7k-☆ course repo](https://github.com/yandexdataschool/nlp_course)
+        Since 2020, top NLP conferences (ACL, EMNLP) have the
+        "Analysis and Interpretability" area: one more confirmation that
+        analysis is an integral part of NLP.
       </Cl>
-      From 2020, both PyTorch and Tensorflow!
-    </Main>
-    <Side>
-      TODO
-    </Side>
-  </SideContainer>
-</Card>
-
-
-<Card style={{ marginTop: '40px' }} id={'whats-inside-research-thinking'}>
-  <SideContainer>
-    <Main md>
-      ## Research Thinking
-      <Cl comic>Learn to think as a research scientist:</Cl>
-      - <Cl comic>find flaws in an approach,</Cl>
-      - <Cl comic>think why/when something can help,</Cl>
-      - <Cl comic>come up with ways to improve,</Cl>
-      - <Cl comic>learn about previous attempts.</Cl>
       <Cl comic>
-        It's well-known that you will learn something easier
-        if you are not just given the answer right away, but if you think about it first. Even
-        if you don't want to be a researcher, this is still a good way to learn things!
+        Each lecture has a section with relevant results on internal workings of models and methods.
       </Cl>
-    </Main>
-    <Side>
-      TODO
-    </Side>
-  </SideContainer>
-</Card>
+    </Card>
+  </CRight>
+</CourseBlock>
+
+[//]: # (Research Thinking)
+<CourseBlock id={'whats-inside-research-thinking'} divider={{ color: 'var(--yellow)', topImage: '/nlp-course/ico/bulb_empty.webp' }}>
+  <CLeft>
+    ## Research Thinking
+    Learn to think as a research scientist:
+    - find flaws in an approach,
+    - think why/when something can help,
+    - come up with ways to improve,
+    - learn about previous attempts.
+
+    It's well-known that you will learn something easier
+    if you are not just given the answer right away, but if you think about it first. Even
+    if you don't want to be a researcher, this is still a good way to learn things!
+  </CLeft>
+
+  <CRight>
+    <Card rect style={{ backgroundColor: '#fff', width: '100%', border: '1px var(--yellow) solid' }} color={'var(--yellow)'}>
+      <Line>
+        <Img src={'/nlp-course/main/i_saw_cat-min.webp'} style={{ width: '100px', float: 'left' }}/>
+        <div>
+          <p style={{
+            backgroundColor: 'var(--light-yellow)',
+            padding: '10px',
+            marginBottom: '5px',
+            minWidth: '100px',
+            textAlign: 'center',
+            fontWeight: 500
+          }}>Demo: Research Card</p>
+          <Cl>Here I define the starting point: something you already know.</Cl>
+        </div>
+      </Line>
+
+      <Hr color={'var(--yellow)'}/>
+
+      <Line style={{ gap: '20px', justifyContent: 'flex-start' }}>
+        <Qm />
+        <span>Why this or that can be useful?</span>
+      </Line>
+      <Spoiler title={'Possible answers'} style={{ marginTop: '5px' }}>
+        Here you will see some possible answers. This part is a motivation to try a new approach: usually, this is what a research project starts with.
+      </Spoiler>
+
+      <Line style={{ gap: '20px', justifyContent: 'flex-start', marginTop: '20px' }}>
+        <Qm />
+        <span>How can we use this to improve that model?</span>
+      </Line>
+      <Spoiler title={'Existing solutions'} style={{ marginTop: '5px' }}>
+        Here I will summarize some previous attempts.
+        You are not supposed to come up with something exactly like here - remember,
+        each paper usually takes the authors several months of work.
+        It's a habit of thinking about these things that counts: you have
+        several ideas, you try; if they don't work, you think again.
+        Eventually, something will work - and this is what papers tell you about.
+      </Spoiler>
+    </Card>
+  </CRight>
+</CourseBlock>
 
 
-<Card style={{ marginTop: '40px' }} id={'whats-inside-related-papers'}>
-  <SideContainer>
-    <Main md>
-      ## Related Papers
-      <Cl comic>Explore related work:</Cl>
-      - <u>high-level</u>: look at key results in short summaries and get an idea of what's going on in the field;
-      - <u>a bit deeper</u>: for topics which interest you more, read longer summaries with illustrations and explanations;
-      - <u>in depth</u>: read the papers you liked.
-    </Main>
-    <Side>
-      TODO
-    </Side>
-  </SideContainer>
-</Card>
+[//]: # (Related Papers)
+<CourseBlock  id={'whats-inside-related-papers'} divider={{ topImage: '/nlp-course/ico/book_empty.webp', color: 'var(--pink)' }}>
+  <CLeft>
+    ## Related Papers
+    Explore related work:
+    - <u>high-level</u>: look at key results in short summaries and get an idea of what's going on in the field;
+    - <u>a bit deeper</u>: for topics which interest you more, read longer summaries with illustrations and explanations;
+    - <u>in depth</u>: read the papers you liked.
+  </CLeft>
+  <CRight>
+    <Card rect style={{ backgroundColor: '#fff', width: '100%', border: '1px var(--pink) solid', position: 'relative' }} color={'var(--pink)'}>
+      <p style={{
+        position: 'absolute',
+        top: '5px',
+        right: '5px',
+        backgroundColor: 'var(--super-light-pink)',
+        border: `1px solid var(--light-pink)`,
+        height: 'min-content',
+        width: 'min-content',
+        whiteSpace: 'nowrap',
+        fontSize: '13px',
+        padding: '0 4px 0 4px',
+        marginBottom: 0
+      }}>EMNLP 2019</p>
+      <Line>
+        <div>
+          <p style={{
+            padding: '10px',
+            marginBottom: '5px',
+            minWidth: '100px',
+            textAlign: 'center',
+            fontWeight: 500,
+            color: 'var(--blue)'
+          }}>Demo: Paper Card</p>
+          <Cl style={{margin: 0, textAlign: 'center'}}>Good Author and Cool Author</Cl>
+          <Hr color={'var(--super-light-pink)'} style={{ margin: '5px 0', borderWidth: '2px' }}/>
+          <Cl>Here I give you a couple of sentences explaining the high-level idea of the paper
+            and/or its main results.</Cl>
+        </div>
+        <Img  style={{ width: '120px' }} src={'/nlp-course/main/pink_lm-min.webp'}/>
+      </Line>
+      <Hr color={'var(--super-light-pink)'} style={{ margin: '5px 0' }}/>
+      <Spoiler title={'More details: click (yes, right here, right now!)'} style={{ marginTop: '5px' }} background={'transparent'}>
+        Here I give you a longer summary, with illustrations and explanations.
+        I try to walk you through the authors' reasoning steps and key observations,
+        and I try to make it as easy for you as possible.
+        After you get the main idea, it'll be easier to read an original research paper.
+      </Spoiler>
+    </Card>
+  </CRight>
+</CourseBlock>
+
+[//]: # (Have Fun)
+<CourseBlock
+  divider={{
+    color: 'var(--light-blue)',
+    topImage: '/nlp-course/ico/fun_empty.webp',
+    topImageStyle: {
+      transform: 'translateY(6px)'
+    }}
+} id={'whats-inside-fun'}>
+  <CLeft>
+    ## Have Fun!
+    <Cl comic>
+      Just fun.
+      <br/>
+      Here you'll see some NLP games related to a lecture topic.
+    </Cl>
+  </CLeft>
+  <CRight>
+    <Card rect style={{ backgroundColor: '#fff', width: '100%', border: '1px var(--light-blue) solid', position: 'relative' }} color={'var(--pink)'}>
+      <p style={{
+        padding: '10px',
+        marginBottom: '5px',
+        minWidth: '100px',
+        textAlign: 'center',
+        fontWeight: 500,
+        color: 'var(--blue)'
+      }}>Week 1: [Semantic Space Surfer](https://lena-voita.github.io/nlp_course/word_embeddings.html#have_fun)</p>
+      <Img src={'/nlp-course/main/fun_preview-min.webp'} />
+    </Card>
+  </CRight>
+</CourseBlock>
 
 
-<Card style={{ marginTop: '40px' }} id={'whats-inside-fun'}>
-  <SideContainer>
-    <Main md>
-      ## Have Fun!
-      <Cl comic>
-        Just fun.
-        <br/>
-        Here you'll see some NLP games related to a lecture topic.
-      </Cl>
-    </Main>
-    <Side>
-      TODO
-    </Side>
-  </SideContainer>
-</Card>
 
 ---
 
 # Course
+
+
+<Card>
+  {/* Week 1 */}
+  <CourseBlock rect id={'preview-word-emb'}
+               color={'var(--green)'}
+               style={{ backgroundColor: '#fff', marginTop: 0 }}
+               divider={{ style: { marginRight: 0 } }} isStatic>
+    <CLeft>
+      <div style={{padding: '10px 0'}}>
+      <h4 style={{
+              backgroundColor: 'var(--super-light-green)',
+              padding: '6px 0',
+              marginBottom: '5px',
+              minWidth: '100px',
+              textAlign: 'center',
+              fontWeight: 300
+            }}>Word Embeddings</h4>
+      </div>
+      - Distributional semantics
+      - Count-based (pre-neural) methods
+      - Word2Vec: __learn__ vectors
+      - GloVe: count, then learn
+      - Evaluation: intrinsic vs extrinsic
+      - <Img src={'/nlp-course/ico/analysis_empty.webp'} style={{width: '20px'}} /> Analysis and Interpretability
+      - Bonus
+      <div style={{ paddingLeft: '20px' }}>
+        <Hr color={'var(--super-light-green)'} style={{ margin: '5px 0', borderWidth: '2px', width: '90%' }}/>
+        <h5 style={{ fontWeight: 300, marginBottom: '0' }}>Seminar & Homework</h5>
+        [Week 1](https://github.com/yandexdataschool/nlp_course/tree/2020/week01_embeddings) in [the course repo](https://github.com/yandexdataschool/nlp_course).
+      </div>
+    </CLeft>
+    <CRight>
+      <Carousel slides={[
+                '/nlp-course/main/preview/word_emb/word_emb-min.png',
+                '/nlp-course/main/preview/word_emb/one_hot-min.png',
+                '/nlp-course/main/preview/word_emb/count_based-min.png',
+                '/nlp-course/main/preview/word_emb/context_window-min.png',
+                '/nlp-course/main/preview/word_emb/skip_gram-min.png',
+                '/nlp-course/main/preview/word_emb/cbow-min.png',
+                '/nlp-course/main/preview/word_emb/w2v_training_1-min.png',
+                '/nlp-course/main/preview/word_emb/w2v_training_2-min.png',
+                '/nlp-course/main/preview/word_emb/semantic_space-min.png',
+                '/nlp-course/main/preview/word_emb/neighbors-min.png',
+                '/nlp-course/main/preview/word_emb/analogy-min.png',
+                '/nlp-course/main/preview/word_emb/cross_lingual-min.png'
+            ]}/>
+      <div style={{ textAlign: "center" }}>
+      [read more ⇨](/nlp-course/word-embeddings)
+      </div>
+    </CRight>
+  </CourseBlock>
+
+  {/* Week 2 */}
+  <CourseBlock rect id={'preview-text-clf'}
+               color={'var(--green)'}
+               style={{ backgroundColor: '#fff', marginTop: '10px' }}
+               divider={{ style: { marginRight: 0 } }} isStatic>
+    <CLeft>
+      <div style={{padding: '10px 0'}}>
+      <h4 style={{
+              backgroundColor: 'var(--super-light-green)',
+              padding: '6px 0',
+              marginBottom: '5px',
+              minWidth: '100px',
+              textAlign: 'center',
+              fontWeight: 300
+            }}>Text Classification</h4>
+      </div>
+      - Intro and Datasets
+      - General Framework
+      - Classical Approaches: Naive Bayes,
+        <NgTab/>MaxEnt (Logistic Regression), SVM
+      - Neural Networks: RNNs and CNNs
+      - <Img src={'/nlp-course/ico/analysis_empty.webp'} style={{width: '20px'}} /> Analysis and Interpretability
+      - Bonus
+      <div style={{ paddingLeft: '20px' }}>
+        <Hr color={'var(--super-light-green)'} style={{ margin: '5px 0', borderWidth: '2px', width: '90%' }}/>
+        <h5 style={{ fontWeight: 300, marginBottom: '0' }}>Seminar & Homework</h5>
+        [Week 2](https://github.com/yandexdataschool/nlp_course/tree/2020/week02_classification) in [the course repo](https://github.com/yandexdataschool/nlp_course).
+      </div>
+    </CLeft>
+    <CRight>
+      <Carousel slides={[
+                '/nlp-course/main/preview/text_clf/example_movie_clean2-min.png',
+                '/nlp-course/main/preview/text_clf/general_framework-min.png',
+                '/nlp-course/main/preview/text_clf/generative_discriminative-min.png',
+                '/nlp-course/main/preview/text_clf/nn_clf-min.png',
+                '/nlp-course/main/preview/text_clf/boe-min.png',
+                '/nlp-course/main/preview/text_clf/rnn_simple-min.png',
+                '/nlp-course/main/preview/text_clf/rnn_multi-min.png',
+                '/nlp-course/main/preview/text_clf/rnn_bi-min.png',
+                '/nlp-course/main/preview/text_clf/cnn-min.png',
+                '/nlp-course/main/preview/text_clf/cnn_filter_feature-min.png',
+                '/nlp-course/main/preview/text_clf/cnn_patterns_how-min.png',
+                '/nlp-course/main/preview/text_clf/cnn_patterns-min.png'
+            ]}/>
+      <div style={{ textAlign: "center" }}>
+      [read more ⇨](/nlp-course/text-classification)
+      </div>
+    </CRight>
+  </CourseBlock>
+
+  {/* Week 3 */}
+  <CourseBlock rect id={'preview-lang-models'}
+               color={'var(--green)'}
+               style={{ backgroundColor: '#fff', marginTop: '10px' }}
+               divider={{ style: { marginRight: 0 } }} isStatic>
+    <CLeft>
+      <div style={{padding: '10px 0'}}>
+      <h4 style={{
+              backgroundColor: 'var(--super-light-green)',
+              padding: '6px 0',
+              marginBottom: '5px',
+              minWidth: '100px',
+              textAlign: 'center',
+              fontWeight: 300
+            }}>Language Modeling</h4>
+      </div>
+      - General Framework
+      - N-Gram LMs
+      - Neural LMs
+      - Generation Strategies
+      - Evaluating LMs
+      - Practical Tips
+      - <Img src={'/nlp-course/ico/analysis_empty.webp'} style={{width: '20px'}} /> Analysis and Interpretability
+      - Bonus
+      <div style={{ paddingLeft: '20px' }}>
+        <Hr color={'var(--super-light-green)'} style={{ margin: '5px 0', borderWidth: '2px', width: '90%' }}/>
+        <h5 style={{ fontWeight: 300, marginBottom: '0' }}>Seminar & Homework</h5>
+        [Week 3](https://github.com/yandexdataschool/nlp_course/tree/2020/week03_lm) in [the course repo](https://github.com/yandexdataschool/nlp_course).
+      </div>
+    </CLeft>
+    <CRight>
+      <Carousel slides={[
+                 '/nlp-course/main/preview/lang_models/lm_generate.mp4',
+                 '/nlp-course/main/preview/lang_models/markov_property-min.png',
+                 '/nlp-course/main/preview/lang_models/smoothing-min.png',
+                 <>
+                   <p style={{textAlign: 'center', fontSize: '20px'}}>Generate a Text with Ngram LMs</p>
+                   <Video src={'/nlp-course/main/preview/lang_models/ngram_generation.mp4'} />
+                 </>,
+                 <>
+                   <p style={{textAlign: 'center', fontSize: '20px'}}>Neural Language Models</p>
+                   <Video src={'/nlp-course/lang_models/neural/nn_lm_prob_idea.mp4'} />
+                 </>,
+                 '/nlp-course/main/preview/lang_models/loss-min.png',
+                 '/nlp-course/main/preview/lang_models/rnn1-min.png',
+                 '/nlp-course/main/preview/lang_models/rnn2-min.png',
+                 '/nlp-course/main/preview/lang_models/cnn1-min.png',
+                 '/nlp-course/main/preview/lang_models/cnn2-min.png',
+                 '/nlp-course/main/preview/lang_models/evaluation-min.png',
+                 '/nlp-course/main/preview/lang_models/temperature-min.png',
+                 '/nlp-course/main/preview/lang_models/top_k-min.png',
+                 '/nlp-course/main/preview/lang_models/top_p_1-min.png',
+                 '/nlp-course/main/preview/lang_models/weight_tying-min.png',
+            ]}/>
+      <div style={{ textAlign: "center" }}>
+      [read more ⇨](/nlp-course/language-modeling)
+      </div>
+    </CRight>
+  </CourseBlock>
+
+  {/* Week 4 */}
+  <CourseBlock rect id={'preview-seq2seq-attn'}
+               color={'var(--green)'}
+               style={{ backgroundColor: '#fff', marginTop: '10px' }}
+               divider={{ style: { marginRight: 0 } }} isStatic>
+    <CLeft>
+      <div style={{padding: '10px 0'}}>
+      <h4 style={{
+              backgroundColor: 'var(--super-light-green)',
+              padding: '6px 0',
+              marginBottom: '5px',
+              minWidth: '100px',
+              textAlign: 'center',
+              fontWeight: 300
+            }}>Seq2seq and Attention</h4>
+      </div>
+      - Seq2seq Basics (Encoder-Decoder, Training, Simple Models)
+      - Attention
+      - Transformer
+      - Subword Segmentation (e.g., BPE)
+      - Inference (e.g., beam search)
+      - <Img src={'/nlp-course/ico/analysis_empty.webp'} style={{width: '20px'}} /> Analysis and Interpretability
+      - Bonus
+      <div style={{ paddingLeft: '20px' }}>
+        <Hr color={'var(--super-light-green)'} style={{ margin: '5px 0', borderWidth: '2px', width: '90%' }}/>
+        <h5 style={{ fontWeight: 300, marginBottom: '0' }}>Seminar & Homework</h5>
+        [Week 4](https://github.com/yandexdataschool/nlp_course/tree/2020/week04_seq2seq) in [the course repo](https://github.com/yandexdataschool/nlp_course).
+      </div>
+    </CLeft>
+    <CRight>
+      <Carousel slides={[
+                '/nlp-course/main/preview/seq2seq/morda_src_dst-min.png',
+                '/nlp-course/main/preview/seq2seq/enc_dec_prob_idea.mp4',
+                '/nlp-course/main/preview/seq2seq/rnn_simple-min.png',
+                '/nlp-course/main/preview/seq2seq/attn1-min.png',
+                '/nlp-course/main/preview/seq2seq/self_attn-min.png',
+                '/nlp-course/main/preview/seq2seq/masked_self_attn-min.png',
+                '/nlp-course/main/preview/seq2seq/multi_head_attn-min.png',
+                '/nlp-course/main/preview/seq2seq/head_positional-min.png',
+                '/nlp-course/main/preview/seq2seq/head_syntactic-min.png',
+                '/nlp-course/main/preview/seq2seq/probing-min.png',
+                '/nlp-course/main/preview/seq2seq/probing_morph-min.png'
+            ]}/>
+      <div style={{ textAlign: "center" }}>
+      [read more ⇨](/nlp-course/seq2seq-and-attention)
+      </div>
+    </CRight>
+  </CourseBlock>
+
+  {/* Week 5, 6 */}
+  <CourseBlock rect id={'preview-transfer'}
+               color={'var(--green)'}
+               style={{ backgroundColor: '#fff', marginTop: '10px' }}
+               divider={{ style: { marginRight: 0 } }} isStatic>
+    <CLeft>
+      <div style={{padding: '10px 0'}}>
+      <h4 style={{
+              backgroundColor: 'var(--super-light-green)',
+              padding: '6px 0',
+              marginBottom: '5px',
+              minWidth: '100px',
+              textAlign: 'center',
+              fontWeight: 300
+            }}>Transfer Learning</h4>
+      </div>
+      - What is Transfer Learning?
+      - From Words to Words-in-Context
+        <NgTab/>(CoVe, ELMo)
+      - From Replacing Embeddings to
+        <NgTab/>Replacing Models (GPT, BERT)
+      - (A Bit of) Adaptors
+      - <Img src={'/nlp-course/ico/analysis_empty.webp'} style={{width: '20px'}} /> Analysis and Interpretability
+      <div style={{ paddingLeft: '20px' }}>
+        <Hr color={'var(--super-light-green)'} style={{ margin: '5px 0', borderWidth: '2px', width: '90%' }}/>
+        <h5 style={{ fontWeight: 300, marginBottom: '0' }}>Seminar & Homework</h5>
+        Week [5](https://github.com/yandexdataschool/nlp_course/tree/2020/week05_transfer) and
+        [6](https://github.com/yandexdataschool/nlp_course/tree/2020/week06_da)
+        in [the course repo](https://github.com/yandexdataschool/nlp_course).
+      </div>
+    </CLeft>
+    <CRight>
+      <Carousel slides={[
+                '/nlp-course/main/preview/transfer/morda-min.png',
+                '/nlp-course/main/preview/transfer/words_to_context-min.png',
+                '/nlp-course/main/preview/transfer/cove-min.png',
+                '/nlp-course/main/preview/transfer/elmo1-min.png',
+                '/nlp-course/main/preview/transfer/elmo2-min.png',
+                '/nlp-course/main/preview/transfer/elmo3-min.png',
+                '/nlp-course/main/preview/transfer/idea2-min.png',
+                '/nlp-course/main/preview/transfer/bert-min.png',
+                '/nlp-course/main/preview/transfer/analysis1-min.png',
+                '/nlp-course/main/preview/transfer/analysis2-min.png',
+                '/nlp-course/main/preview/transfer/analysis3-min.png'
+            ]}/>
+      <div style={{ textAlign: "center" }}>
+      [read more ⇨](/nlp-course/transfer-learning)
+      </div>
+    </CRight>
+  </CourseBlock>
+  <ToBeContinued id={'coming-soon'} />
+</Card>
+
+
+<Hr color={'var(--light-violet)'} />
+
+# Supplementary
+
+<Card style={{ marginBottom: '40px' }}>
+  {/* Convolutional Networks */}
+  <CourseBlock rect id={'preview-supplementary-cnn'}
+               color={'var(--light-violet)'}
+               style={{ backgroundColor: '#fff', marginTop: 0 }}
+               divider={{ style: { marginRight: 0 }, color: 'var(--light-violet)' }} isStatic>
+    <CLeft>
+      <div style={{padding: '10px 0'}}>
+      <h4 style={{
+              backgroundColor: 'var(--super-light-violet)',
+              padding: '6px 0',
+              marginBottom: '5px',
+              minWidth: '100px',
+              textAlign: 'center',
+              fontWeight: 300
+            }}>Convolutional Networks</h4>
+      </div>
+      - Intuition
+      - Building Blocks: Convolution
+        <NgTab/> (and parameters: kernel, stride, padding, bias)
+      - Building Blocks: Pooling (max/mean, k-max, global)
+      - CNNs Models: Text Classification
+      - CNNs Models: Language Modeling
+      - <Img src={'/nlp-course/ico/analysis_empty.webp'} style={{width: '20px'}} /> Analysis and Interpretability
+    </CLeft>
+    <CRight>
+      <Carousel slides={[
+                '/nlp-course/main/preview/cnn/receptive_field-min.png',
+                '/nlp-course/main/preview/cnn/conv1-min.png',
+                '/nlp-course/main/preview/cnn/conv2-min.png',
+                '/nlp-course/main/preview/cnn/kernel_size-min.png',
+                '/nlp-course/main/preview/cnn/stride-min.png',
+                '/nlp-course/main/preview/cnn/cnn_filter_feature-min.png',
+                '/nlp-course/main/preview/cnn/max_pooling-min.png',
+                '/nlp-course/main/preview/cnn/pooling-min.png',
+                '/nlp-course/main/preview/cnn/global_pooling-min.png',
+                '/nlp-course/main/preview/cnn/residual_connection-min.png',
+                '/nlp-course/main/preview/cnn/model_with_residual-min.png'
+            ]}/>
+      <div style={{ textAlign: "center" }}>
+      [read more ⇨](/nlp-course/models/convolutional.mdx)
+      </div>
+    </CRight>
+  </CourseBlock>
+  <ToBeContinued />
+</Card>

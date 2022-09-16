@@ -1,15 +1,26 @@
 .image {
-    width: 100%;
+    width: max-content;
     object-fit: contain;
+    z-index: 20;
 }
 
-.lg {
+.left {
+    float: left;
+    margin-right: 25px;
+    max-width: 60%;
 }
 
-.md {
-
+.right {
+    float: right;
+    margin-left: 25px;
+    max-width: 60%;
 }
 
-.sx {
 
+@media screen and (max-width: 830px) {
+    .right, .left {
+        float: unset;
+        max-width: 90%;
+        margin: 0;
+    }
 }

@@ -1,0 +1,33 @@
+.root {
+    display: flex;
+    justify-content: flex-start;
+    max-height: max-content;
+    margin-bottom: 14px;
+}
+
+.content {
+    display: block;
+    padding: 20px 0 20px 20px;
+    width: 100%;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 920px){
+    .content {
+        max-width: calc( 100vw * 0.8 );
+    }
+}
+
+@media screen and (max-width: 660px){
+    .content {
+        max-width: calc( 100vw * 0.7 );
+        padding: 10px 0 10px 10px;
+    }
+}
+
+@media screen and (max-width: 430px){
+    .content {
+        max-width: calc( 100vw * 0.6 );
+        padding: 8px 0 8px 8px;
+    }
+}

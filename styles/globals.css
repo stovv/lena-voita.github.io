@@ -10,7 +10,16 @@ Samsung Browser: version 15+
 @import 'colors.css';
 @import 'font.css';
 @import '../node_modules/react-highlight-code/dist/style.css';
+@import '../node_modules/slick-carousel/slick/slick.css';
+@import '../node_modules/slick-carousel/slick/slick-theme.css';
+@import '../node_modules/katex/dist/katex.min.css';
+@import '../node_modules/react-image-lightbox/style.css';
+@import "../node_modules/survey-core/defaultV2.min.css";
 
+
+* {
+    box-sizing: border-box;
+}
 
 body {
     background-color: var(--page-background);
@@ -18,8 +27,55 @@ body {
 
 hr {
     border-top: 1px solid var(--super-light-gray);
+    margin: 20px 0;
+}
+
+.code {
+    z-index: 20 !important;
 }
 
 .TL_word {
     font-family: Helvetica;
 }
+
+.chakra-portal {
+    width: 100%;
+    height: 100%;
+}
+
+.slick-dots {
+    bottom: -10px;
+}
+
+.slick-dots li {
+    margin: 0
+}
+
+
+.slick-arrow {
+    height: 100%;
+    width: 40px;
+    z-index: 2;
+}
+
+.slick-next {
+    right: 0;
+}
+
+.slick-next:hover {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 50%, rgba(172,172,172,0.1) 100%);
+}
+
+.slick-prev {
+    left: 0;
+}
+
+.slick-prev:hover {
+    background: linear-gradient(90deg, rgba(172,172,172,0.1) 0%, rgba(255,255,255,0) 50%);
+}
+
+.slick-next:before, .slick-prev:before {
+    color: black;
+    padding-left: 10px;
+}
+

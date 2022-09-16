@@ -2,24 +2,27 @@
 layout: base
 ---
 
+<Img
+  src={'/people/orange_lena-min.webp'}
+  style={{ width: '180px', float: 'right', marginLeft: '10px', marginBottom: '10px' }}
+  mobile={{
+    width: '180px',
+    float: 'none',
+    margin: '0',
+    paddingBottom: '10px',
+  }}
+/>
+I am Elena (Lena) Voita, a __Ph.D. student__ at the University of Edinburgh supervised by
+<Ext href={config.links.ivanPage}>Ivan Titov</Ext> and <Ext href={config.links.ricoPage}>Rico Sennrich</Ext>.
+Currently visiting <Ext href={config.links.institutoSuperiorTecnico}>Instituto Superior Técnico</Ext> in Lisbon.
 
-<SideContainer>
-  <Main>
-    I am Elena (Lena) Voita, a __Ph.D. student__ at the University of Edinburgh supervised by
-    <Ext href={config.links.ivanPage}>Ivan Titov</Ext> and <Ext href={config.links.ricoPage}>Rico Sennrich</Ext>.
-    Currently visiting <Ext href={config.links.institutoSuperiorTecnico}>Instituto Superior Técnico</Ext> in Lisbon.
-    <br/>
-    I'm supported by the  <Ext href={config.links.facebookPhDFellowship}>__Facebook PhD Fellowship__</Ext> (2020-2022).
-    <br/>
-    Previously, I was a __research scientist__ at [Yandex Research](  ) and worked closely with the [Yandex Translate](https://translate.yandex.com) team.
-    I (still) <Ext href={config.links.githubNlpCourse}>teach NLP</Ext> at the <Ext href={config.links.yandexDataSchool}>Yandex School of Data Analysis</Ext>.
-    <br/>
-    <Hl bold>New!</Hl> NLP Course <Hl color={'green'}>For You</Hl> - look <a href={config.links.nlpCourse}>here</a>.
-  </Main>
-  <Side>
-    <Img src={'/people/orange_lena-min.webp'} style={{ width: '180px' }} />
-  </Side>
-</SideContainer>
+I'm supported by the  <Ext href={config.links.facebookPhDFellowship}>__Facebook PhD Fellowship__</Ext> (2020-2022).
+
+Previously, I was a __research scientist__ at [Yandex Research](  ) and worked closely with the [Yandex Translate](https://translate.yandex.com) team.
+I (still) <Ext href={config.links.githubNlpCourse}>teach NLP</Ext> at the <Ext href={config.links.yandexDataSchool}>Yandex School of Data Analysis</Ext>.
+
+<Hl bold>New!</Hl> NLP Course <Hl color={'green'}>For You</Hl> - look <a href={config.links.nlpCourse}>here</a>.
+
 
 ## News
 

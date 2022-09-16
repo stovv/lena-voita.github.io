@@ -18,15 +18,34 @@
     --accent: #2a7ae2;
 
     /* common */
-    --gray: #424242;
     --red: #ff0000;
-    --green: #92bf32;
+
+    --gray: #424242;
     --light-gray: #888;
-    --super-light-gray: rgba(45, 45, 45, 0.1);
     --bold-gray: #999;
-    --dark-blue: rgb(0, 0, 139);
+    --super-light-gray: rgba(45, 45, 45, 0.1);
+
     --yellow: #f0d043;
+    --light-yellow: #fafaf5;
+
+    --green: #92bf32;
     --light-green: #c7db4d;
+    --green-border: #b7db67;
+    --green-bg: #fafcf5;
+    --super-light-green: #f6fce8;
+
+    --violet: #8a4972;
+    --light-violet: #b59fcf;
+    --bold-violet: #67468f;
+    --super-light-violet: #f8f2ff;
+
+    --pink: #7a3160;
+    --light-pink: #d1a1c3;
+    --super-light-pink: #f7edf4;
+
+    --blue: #377b94;
+    --light-blue: #0278a1;
+    --dark-blue: rgb(0, 0, 139);
 
 
     /* header */

@@ -1,0 +1,28 @@
+.root {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.icon {
+    flex-shrink: 0;
+    height: 50px;
+    width: 50px;
+}
+
+.content {
+    flex-shrink: 0;
+}
+
+.content * {
+    margin: 0;
+    padding: 0;
+}
+
+.line {
+    flex-shrink: 1;
+    width: 100%;
+    height: 5px;
+}

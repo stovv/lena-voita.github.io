@@ -1,0 +1,18 @@
+.root {
+    width: 100%;
+    display: block;
+}
+
+
+@media screen and (max-width: 910px){
+    .root {
+        width: 95%;
+        max-width: 95%;
+    }
+
+    .carousel {
+        width: 100%;
+        max-width: calc(100vw - 60px - 60px);
+    }
+}
+

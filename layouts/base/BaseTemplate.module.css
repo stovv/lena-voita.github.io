@@ -5,7 +5,18 @@
 }
 
 .main {
+    position: relative;
     max-width: 800px;
     min-width: 800px;
     min-height: 80vh;
+}
+
+@media screen and (max-width: 900px) {
+    .wrapper {
+        padding: 30px 20px;
+    }
+
+    .main {
+        min-width: calc(100vw - 40px);
+    }
 }

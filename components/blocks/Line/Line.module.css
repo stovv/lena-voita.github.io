@@ -1,0 +1,36 @@
+.root {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.horizontal {
+    flex-direction: row;
+}
+
+.responsible {
+
+}
+
+.ror {
+
+}
+
+@media screen and (max-width: 800px) {
+    .horizontal.responsible.ror {
+        flex-direction: column-reverse;
+    }
+
+    .responsible.ror {
+
+    }
+}
+
+
+

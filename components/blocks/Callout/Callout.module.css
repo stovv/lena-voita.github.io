@@ -1,0 +1,30 @@
+.root {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px 20px 20px 0;
+    width: 100%;
+}
+
+.icon {
+    width: 40px;
+    padding-right: 10px;
+}
+
+.container {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--yellow);
+    border-radius: 5px;
+}
+
+.container p:last-child {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 910px){
+    .root {
+        width: 100%;
+        max-width: calc(100vw - 60px - 40px);
+    }
+}

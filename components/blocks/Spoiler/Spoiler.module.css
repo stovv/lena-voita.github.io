@@ -1,0 +1,36 @@
+.root {
+}
+
+.title {
+    padding: 10px;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.title::marker, .title::-webkit-details-marker {
+    display: none;
+}
+
+
+.title::before {
+    content: "➞";
+    margin-right: 5px;
+}
+
+.root[open] .title::before {
+    content: "⭣";
+}
+
+
+@keyframes sweep {
+    0%    {opacity: 0; margin-left: -10px}
+    100%  {opacity: 1; margin-left: 0px}
+}
+
+.content {
+    padding: 10px;
+}
+
+.root[open] .content {
+    animation: sweep .5s ease-in-out;
+}

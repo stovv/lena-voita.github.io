@@ -1,0 +1,343 @@
+---
+title: Test
+layout: course
+---
+
+<ContentTable>
+  - [**NLP Course** <Hl color="green">**| For You**</Hl> <Img src={'/nlp-course/ico/logo.webp'} style={{float: 'right', width: '24px'}}/>](#nlp-course-for-you)
+  - __Word Embeddings__
+  - [One-Hot Vectors](#represent-as-discrete-symbols-one-hot-vectors)
+  - [Distributional Semantics](#distributional-semantics)
+  - [Count-Based Methods](#)
+  - [Word2Vec](#)
+    - [Idea](#)
+    - [Objective Function](#)
+    - [Training Procedure](#)
+    - [Negative Sampling](#)
+    - [Skip-Gram vs CBOW](#)
+    - [Additional Notes](#)
+  - [GloVe](#)
+  - [Evaluation](#)
+  - [Analysis and Interpretability](#)
+  - [Research Thinking](#)
+  - [Related Papers](#)
+  - [Have Fun!](#)
+</ContentTable>
+
+<h1>Word Embeddings</h1>
+
+
+<Img height="200" src="/nlp-course/word_emb/word_repr_intro-min.png" right lightBox/>
+The way machine learning models "__see__" data is different from how we (humans) do. For example, we can easily
+understand the text __"I saw a cat"__,
+but our models can not - they need vectors of features.
+Such vectors, or __word embeddings__, are representations of words which can be fed into your model.
+
+<br/>
+
+<Img height="130" src="/nlp-course/word_emb/lookup_table.gif" right lightBox/>
+<u>How it works:</u> Look-up Table (Vocabulary)
+
+In practice, you have a vocabulary of allowed words; you choose this vocabulary in advance.
+For each vocabulary word, a look-up table contains its embedding. This embedding can be found
+using the word index in the vocabulary (i.e., you
+to __look up__ the embedding in the table using word index).
+
+<Img height="70" src="/nlp-course/word_emb/unk_in_voc-min.png" right lightBox/>
+To account for unknown words (the ones which are not in the vocabulary), usually a vocabulary
+contains a special token __UNK__. Alternatively, unknown tokens can be ignored or assigned a zero vector.
+#### The main question of this lecture is: how do we get these word vectors?
+
+<br/><br/>
+
+### Represent as Discrete Symbols: One-hot Vectors
+
+The easiest you can do is to represent words as one-hot vectors: for the i-th word in the vocabulary,
+the vector has 1 on the i-th dimension and 0 on the rest. In Machine Learning, this is the most simple way to represent
+categorical features.
+
+
+You probably can guess why one-hot vectors are not the best way to represent words. One of the problems is that
+for large vocabularies, these vectors will be very long: vector dimensionality is equal to the vocabulary size.
+This is undesirable in practice, but this problem is not the most crucial one.
+
+What is really important, is that these vectors __know nothing__
+about the words they represent. For example, one-hot vectors "think" that __cat__ is as close to __dog__ as it is to __table!__
+We can say that <u>one-hot vectors do not capture __meaning.__</u>
+
+But how do we know what is meaning?
+
+<br/><br/>
+
+### Distributional Semantics
+
+To capture meaning of words in their vectors, we first need to define
+the notion of meaning that can be used in practice.
+For this, let us try to understand how we, humans, get to know which words have similar meaning.
+
+
+
+
+<Part divider={{ topImage: '/nlp-course/ico/paw_empty.webp', botImage: '/nlp-course/ico/paw_empty.webp' }}>
+  <Callout color={'var(--green)'}>
+    <u>How to:</u> go over the slides at your pace. Try to notice how your brain works.
+  </Callout>
+  <CourseCarousel slides={[
+    {
+      url: '/nlp-course/word_emb/tezguino1-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course//word_emb/tezguino2-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino3-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino4-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino5-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino6-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino7-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino8-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino9-min.png',
+      title: ''
+    },
+  ]}/>
+
+  <Cl gray>
+    <u>Lena</u>: The example is from [Jacob Eisenstein's NLP notes;](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
+    the __tezgüino__ example originally appeared in [Lin, 1998](https://www.aclweb.org/anthology/C98-2122.pdf).
+  </Cl>
+</Part>
+
+Once you saw how the unknown word used in different contexts, you were able to understand it's meaning.
+How did you do this?
+
+The hypothesis is that your brain searched for other words
+that can be used in the same contexts, found some (e.g., __wine__), and
+made a conclusion that __tezgüino__ has meaning similar to those other words.
+This is the <Cl comic>distributional hypothesis:</Cl>
+
+> Words which frequently appear in __similar contexts__ have __similar meaning__.
+
+Once you saw how the unknown word used in different contexts,
+you were able to understand it's meaning.
+How did you do this?
+
+The hypothesis is that your brain searched for other words
+that can be used in the same contexts, found some (e.g., __wine__), and
+made a conclusion that __tezgüino__ has meaning
+similar to those other words.
+
+This is the <Cl comic>distributional hypothesis:</Cl>
+
+> Words which frequently appear in __similar contexts__ have __similar meaning__.
+
+<Cl gray comic>
+  <u>Lena:</u> Often you can find it formulated as "You shall know a word by the company it keeps" with the reference
+  to J. R. Firth in 1957, but
+  actually there
+  were a lot more people
+  responsible, and much earlier. For example, [Harris, 1954.](https://www.tandfonline.com/doi/pdf/10.1080/00437956.1954.11659520)
+</Cl>
+
+This is an extremely valuable idea: it can be used in practice to make word vectors capture
+their meaning. According to the distributional hypothesis, "to capture meaning" and
+"to capture contexts" are inherently the same.
+Therefore, all we need to do is to put information about word contexts into word representation.
+
+> <u>Main idea</u>: We need to put information about word contexts into word representation.
+
+All we'll be doing at this lecture is looking at different ways to do this.
+
+# Count-Based Methods
+
+![count-based](/nlp-course/word_emb/preneural/idea-min.png)
+
+Let's remember our main idea:
+> <u>Main idea</u>: We have to put information about contexts into word vectors.
+
+Count-based methods take this idea quite literally:
+
+> <u>How</u>: Put this information __manually__ based on global corpus statistics.
+
+The general procedure is illustrated above and consists of the two steps: (1)
+construct a word-context matrix, (2) reduce its dimensionality. There are two reasons to reduce dimensionality.
+First, a raw matrix is very large. Second, since a lot of words appear in only a few of possible contexts,
+this matrix potentially has a lot of uninformative elements (e.g., zeros).
+
+To estimate
+similarity between words/contexts, usually you need to evaluate
+the dot-product of normalized word/context vectors (i.e., cosine similarity).
+
+<Img src="/nlp-course/word_emb/preneural/need_to_define-min.png" right lightBox style={{ width: '25%'}} />
+To define a count-based method, we need to define two things:
+- possible contexts (including what does it mean that a word appears in a context),
+- the notion of association, i.e., formulas for computing matrix elements.
+
+Below we provide a couple of popular ways of doing this.
+
+## Simple: Co-Occurence Counts
+<br/>
+<Img src="/nlp-course/word_emb/preneural/window-min.png" lightBox />
+<Img src="/nlp-course/word_emb/preneural/define_simple-min.png" right lightBox style={{ width: '25%'}} />
+The simplest approach is to define contexts as each word in an L-sized window.
+Matrix element for a word-context pair (w, c) is the number of times w appears in context c.
+This is the very basic (and very, very old) method for obtaining embeddings.
+
+
+<Callout icon={'bulb_empty'}>
+    The (once) famous HAL model (1996)
+    is also a modification of this approach.
+    Learn more from [this exercise](#research_improve_count_based)
+    in the [Research Thinking](#research_thinking) section.
+</Callout>
+
+## Positive Pointwise Mutual Information (PPMI)
+
+<Img src="/nlp-course/word_emb/preneural/define_ppmi-min.png" right lightBox />
+Here contexts are defined as before, but the measure of
+the association between word and context is more clever: positive PMI (or PPMI for short).
+PPMI measure is widely regarded as state-of-the-art for pre-neural distributional-similarity models.
+
+
+> <u>Important</u>: relation to neural models! Turns out, some of the neural methods we will consider (Word2Vec) were shown
+> to implicitly approximate the factorization of a (shifted) PMI matrix. Stay tuned!
+
+
+<br/>
+
+## Latent Semantic Analysis (LSA): Understanding Documents
+
+<Img src="/nlp-course/word_emb/preneural/lsa-min.png" right lightBox />
+
+[Latent Semantic Analysis (LSA)](http://lsa.colorado.edu/papers/JASIS.lsi.90.pdf) analyzes a collection of documents.
+While in the previous approaches contexts served only to get word vectors and were thrown away afterward, here we are
+also interested in context, or, in this case, document vectors. LSA is one of the simplest topic models:
+cosine similarity between document vectors can be used to measure similarity between documents.
+The term "LSA" sometimes refers to a more general approach of applying SVD to a term-document
+matrix where the term-document elements can be computed in different ways
+(e.g., simple co-occurrence, tf-idf, or some other weighting).
+
+> <u>Animation alert!</u>
+> [LSA wikipedia page](https://en.wikipedia.org/wiki/Latent_semantic_analysis) has a nice
+> animation of the topic detection process in a document-word matrix - take a look!
+
+# Word2Vec: a Prediction-Based Method
+<div id="w2v_idea" />
+
+Let us remember our main idea again:
+
+> <u>Main idea</u>: We have to put information about contexts into word vectors.
+
+While count-based methods took this idea quite literally, Word2Vec uses it in a different manner:
+
+> <u>How</u>: __Learn__ word vectors by teaching them to __predict contexts__.
+<Img src="/nlp-course/word_emb/w2v/intro-min.png" right lightBox />
+
+Word2Vec is a model whose parameters are word vectors. These parameters are optimized iteratively
+for a certain objective. The objective forces word vectors to "know" contexts a word can appear in:
+the vectors are trained to predict possible contexts of the corresponding words.
+As you remember from the distributional hypothesis, if vectors "know" about contexts, they "know" word meaning.
+
+Word2Vec is an iterative method. Its main idea is as follows:
+- take a huge text corpus;
+- go over the text with a sliding window, moving one word at a time. At each step, there is a central word
+and context words (other words in this window);
+- for the central word, compute probabilities of context words;
+- adjust the vectors to increase these probabilities.
+
+<Part divider={{ topImage: '/nlp-course/ico/paw_empty.webp', botImage: '/nlp-course/ico/paw_empty.webp' }}>
+  <u>How to:</u> go over the illustration to understand the main idea.
+  <CourseCarousel slides={[
+    {
+      url: '/nlp-course/word_emb/w2v/window_prob1-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/w2v/window_prob2-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/w2v/window_prob3-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/w2v/window_prob4-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/w2v/window_prob5-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/w2v/window_prob6-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino7-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino8-min.png',
+      title: ''
+    },
+    {
+      url: '/nlp-course/word_emb/tezguino9-min.png',
+      title: ''
+    },
+  ]}/>
+
+  <Cl gray>
+    <u>Lena:</u> Visualization idea is from [the Stanford CS224n course.](http://web.stanford.edu/class/cs224n/index.html#schedule)
+  </Cl>
+</Part>
+
+<div id="w2v_objective_function"/>
+
+## <u>Objective Function</u>: Negative Log-Likelihood
+
+For each position <Math>(t =1, \dots, T)</Math> in a text corpus,
+Word2Vec predicts context words within a m-sized window given the central
+word <Math>{'\\color{#88bd33}{w_t}'}</Math>:
+<br/>
+<BlockMath>{'\\color{#88bd33}{{Likelihood}} \\color{black}= L(\\theta)=\\prod\\limits_{t=1}^T\\prod\\limits_{-m\\le j \\le m, j\\neq 0}P(\\color{#888}{w_{t+j}}|\\color{#88bd33}{w_t}\\color{black}, \\theta),'}</BlockMath>
+
+where <Math>\theta</Math> are all variables to be optimized.
+
+<Img src="/nlp-course/word_emb/w2v/loss_with_the_plan-min.png" lightBox />
+
+Note how well the loss agrees with our plan main above: go over text with a
+sliding window and compute probabilities.
+Now let's find out how to compute these probabilities.
+
+<div id="word2vec_calculate_p" />
+### <u>How to calculate</u>  <Math>{'P(\\color{#888}{w_{t+j}}\\color{black}|\\color{#88bd33}{w_t}\\color{black}, \\theta)?'}</Math>
+
+<Img src="/nlp-course/word_emb/w2v/two_vocs_with_theta-min.png" lightBox />
+
+<Quiz name={'test'} />
+
+[//]: # ()
+[//]: # (<ExtraHeading icon={'/nlp-course/ico/bulb_empty.webp'} color={'var&#40;--yellow&#41;'}>)
+
+[//]: # (  # Research Thinking)
+
+[//]: # (</ExtraHeading>)

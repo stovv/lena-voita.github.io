@@ -2,6 +2,11 @@
     position: sticky;
     top: 40px;
     user-select: none;
+    border-right: 4px solid var(--tok-border-color);
+}
+
+.root ul {
+    margin-left: 0;
 }
 
 .root > ul:first-child {
@@ -23,20 +28,22 @@
     padding: 8px;
 }
 
-.root li:not(:has(ul)):hover {
+
+.root ul li ul li:where(:not(ul)):hover {
     background-color: var(--super-light-gray);
+}
+
+.root ul li ul li:where(:not(ul)) a {
+    padding-left: 0;
+
 }
 
 .root ul li a {
     display: block;
     color: var(--text-color);
     width: 100%;
-    padding: 8px;
+    padding: 8px 10px;
     background-image: var(--link-border-none);
-}
-
-.root ul li:marker {
-    display: none;
 }
 
 .root > ul ~ li {
@@ -77,5 +84,85 @@
 }
 
 .chapter ul {
-    margin-top: 10px;
+    margin-top: 8px;
+}
+
+.chapter ul li {
+    display: list-item;
+    text-align: match-parent;
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.mini {
+    position: sticky;
+    display: none;
+    top: 40px;
+    user-select: none;
+    border-right: 4px solid var(--tok-border-color);
+}
+
+.openButton {
+    padding: 10px;
+    color: var(--header-burger-icon);
+    transition: background-color .3s ease-in-out;
+    cursor: pointer;
+    width: 100%;
+}
+
+.openButton:hover {
+    background-color: var(--super-light-gray);
+}
+
+
+.closeButton {
+    display: none;
+    color: var(--header-burger-icon);
+    transition: background-color .3s ease-in-out;
+    cursor: pointer;
+}
+
+.closeButton:hover {
+    background-color: var(--super-light-gray);
+}
+
+
+@media screen and (max-width: 1135px){
+    .root {
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding-top: 70px;
+        background-color: var(--toc-bg);
+        height: 100vh;
+        box-shadow: 9px 0 7px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+        transform: translateX(-120%);
+        transition: transform .3s ease-in-out;
+        min-width: 250px;
+    }
+
+    .root.opened {
+        transform: translateX(0%);
+    }
+
+    .mini {
+        display: block;
+        height: 100vh;
+        width: 60px;
+    }
+
+    .closeButton {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+    }
+
+    .root > ul {
+        margin-left: 0;
+    }
 }

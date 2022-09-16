@@ -19,15 +19,22 @@
 
 
 /* Default font */
-p, span, label, li, ol, *::after, *::before {
+p, span, label, li, ol, summary, *::after, *::before, q {
     @extend base-font;
     color: var(--text-color);
     font-size: 16px;
     font-weight: 300;
     line-height: 1.5;
+    z-index: 0;
 }
 p {
     @extend default-margin;
+}
+
+q {
+    font-size: 18px;
+    font-family: "Comic Neue", "Arial";
+    line-height: 150%;
 }
 
 .sm-font {
@@ -58,35 +65,30 @@ a:focus {
 }
 
 /* Headings font */
-h1, h1 > span {
+h1, h1 > span,
+h2, h2 > span {
     @extend base-font;
     @extend default-margin;
     font-size: 38px;
     line-height: 1;
 }
 
-h2, h2 > span {
+h3, h3 > span {
     @extend base-font;
     @extend default-margin;
     font-size: 32px;
 }
 
-h3, h3 > span {
+h4, h4 > span {
     @extend base-font;
     @extend default-margin;
     font-size: 26px;
 }
 
-h4 {
-    @extend base-font;
-    @extend default-margin;
-    font-size: 20px;
-}
-
 h5 {
     @extend base-font;
     @extend default-margin;
-    font-size: 12px;
+    font-size: 20px;
 }
 
 h6 {
@@ -95,9 +97,15 @@ h6 {
     font-size: 12px;
 }
 
+h7 {
+    @extend base-font;
+    @extend default-margin;
+    font-size: 12px;
+}
+
 
 strong {
-    font-weight: bold;
+    font-weight: 500;
 }
 
 u {
@@ -125,4 +133,10 @@ li:marker {
     font-variant-numeric: tabular-nums;
     white-space: pre;
     text-transform: none;
+}
+
+@media screen and (max-width: 740px){
+    ul {
+        margin-left: 5px;
+    }
 }

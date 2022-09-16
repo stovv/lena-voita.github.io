@@ -1,0 +1,30 @@
+.root {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 346px;
+    padding: 0 40px;
+}
+
+.text {
+    font-size: 30px;
+    line-height: 150%;
+    font-weight: 300;
+}
+
+.image {
+    border-radius: 9999px;
+    width: 170px;
+}
+
+@media screen and (max-width: 900px) {
+    .root {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 250px;
+        padding: 40px;
+        margin-bottom: 20px;
+    }
+}

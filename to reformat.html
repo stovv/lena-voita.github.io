@@ -1,0 +1,791 @@
+
+<div id="word2vec">
+
+  <br/><br/>
+
+  <div id="w2v_objective_function">
+
+    <p></p>
+
+
+
+    <img height="240" src="/nlp-course/word_emb/w2v/two_vocs_with_theta-min.png"
+         style="float:right; margin-left: 25px; max-width:60%"/>
+    <h3 id="word2vec_calculate_p"><u>How to calculate</u> \(P(\color{#888}{w_{t+j}}\color{black}|\color{#88bd33}{w_t}\color{black}, \theta)\)?</h3>
+
+    <p>For each word \(w\) we will have two vectors:</p>
+    <ul>
+      <li>\(\color{#88bd33}{v_w}\) when it is a <font color="#88bd33">central word</font>;</li>
+      <li>\(\color{#888}{u_w}\) when it is a <font color="#888">context word</font>.</li>
+    </ul>
+    <p>(Once the vectors are trained, usually we throw away context vectors and use
+      only word vectors.)</p>
+
+
+    <p>Then for the central word \(\color{#88bd33}{c}\) (c - central) and
+      the context word \(\color{#888}{o}\) (o - outside word)
+      probability of the context word is</p>
+    <img src="/nlp-course/word_emb/w2v/prob_o_c-min.png" height="120" style="margin: 10px;">
+
+    <!--\[P(\color{#888}{o}|\color{#88bd33}{c}) = \frac{\exp{\color{#888}{u_o^T}\color{#88bd33}{v_c}}}{
+    \sum\limits_{w\in Voc}\exp{\color{#888}{u_w^T}\color{#88bd33}{v_c}}}\]-->
+
+
+    <br/>
+
+    <details>
+      <summary><p><u>Note</u>: this is the <font face="arial">softmax function</font>! (click for the details)</p></summary>
+
+      <p>The function above is an example of the <font face="arial">softmax function</font>:
+        \[softmax(x_i)=\frac{\exp(x_i)}{\sum\limits_{j=i}^n\exp(x_j)}.\]
+        <font face="arial">Softmax</font> maps arbitrary values \(x_i\) to a probability
+        distribution \(p_i\):</p>
+      <ul>
+        <li><font face="arial">"max"</font> because the largest \(x_i\) will have the largest probability \(p_i\);</li>
+        <li><font face="arial">"soft"</font> because all probabilities are non-zero.</li>
+      </ul>
+    </details>
+    <p>You will deal with this function quite a lot over the NLP course (and in Deep Learning in general).</p>
+    <br/>
+
+    <img height="20" src="/nlp-course/ico/paw_empty.png" style="float:left; margin-top:-10px;"/>
+    <div class="box_green_left">
+
+      <div class="text_box_green">
+        <p class="data_text"><u>How to:</u> go over the illustration. Note that for
+          <font color="#88bd33">central words</font> and <font color="#888">context words</font>, different
+          vectors are used. For example, first the word <strong>a</strong> is central and
+          we use \(\color{#88bd33}{v_a}\), but when it becomes context,
+          we use \(\color{#888}{u_a}\) instead.
+        </p>
+      </div>
+
+      <div class="carousel" data-flickity='{ "imagesLoaded": true, "percentPosition": true, "selectedAttraction": 1, "friction": 1 }'
+           style="width:100%; height: auto; margin-top:10px; margin-bottom:30px; margin-left:10px;">
+        <div class="carousel-cell" style="width:100%"><center>
+          <img width="600" src="/nlp-course/word_emb/w2v/window_two_vocs1-min.png"/></center>
+        </div>
+        <div class="carousel-cell" style="width:100%"><center>
+          <img width="600" src="/nlp-course/word_emb/w2v/window_two_vocs2-min.png"/></center>
+        </div>
+        <div class="carousel-cell" style="width:100%"><center>
+          <img width="600" src="/nlp-course/word_emb/w2v/window_two_vocs3-min.png"/></center>
+        </div>
+        <div class="carousel-cell" style="width:100%"><center>
+          <img width="600" src="/nlp-course/word_emb/w2v/window_two_vocs4-min.png"/></center>
+        </div>
+        <div class="carousel-cell" style="width:100%"><center>
+          <img width="600" src="/nlp-course/word_emb/w2v/window_two_vocs5-min.png"/></center>
+        </div>
+        <div class="carousel-cell" style="width:100%"><center>
+          <img width="600" src="/nlp-course/word_emb/w2v/window_two_vocs6-min.png"/></center>
+        </div>
+      </div>
+
+    </div>
+    <img height="20" src="/nlp-course/ico/paw_empty.png" style="float:left; margin-top:-10px;"/>
+
+  </div>
+  <br/><br/>
+
+  <div  id="w2v_training">
+
+    <h2><u>How to train</u>: by Gradient Descent, One Word at a Time</h2>
+
+    <p>Let us recall that our parameters \(\theta\) are vectors \(\color{#88bd33}{v_w}\) and \(\color{#888}{u_w}\)
+      for all words in the vocabulary. These vectors are learned by optimizing the training objective via gradient descent
+      (with some learning rate \(\alpha\)):
+      \[\theta^{new} = \theta^{old} - \alpha \nabla_{\theta} J(\theta).\]</p>
+
+    <h3><u>One word at a time</u></h3>
+    <p>We make these updates one at a time: each update is for
+      a single pair of a center word and one of its context words.
+      Look again at the loss function:
+      \[\color{#88bd33}{\mbox{Loss}}\color{black} =J(\theta)= -\frac{1}{T}\log L(\theta)=
+      -\frac{1}{T}\sum\limits_{t=1}^T
+      \sum\limits_{-m\le j \le m, j\neq 0}\log P(\color{#888}{w_{t+j}}\color{black}|\color{#88bd33}{w_t}\color{black}, \theta)=
+      \frac{1}{T} \sum\limits_{t=1}^T
+      \sum\limits_{-m\le j \le m, j\neq 0} J_{t,j}(\theta). \]
+
+      For the center word \(\color{#88bd33}{w_t}\), the loss contains a distinct term
+      \(J_{t,j}(\theta)=-\log P(\color{#888}{w_{t+j}}\color{black}|\color{#88bd33}{w_t}\color{black}, \theta)\) for each of its context words
+      \(\color{#888}{w_{t+j}}\).
+
+      Let us look in more detail at just this one term and try to understand how to make an update for this step. For example,
+      let's imagine we have a sentence</p>
+    <center>
+      <img src="/nlp-course/word_emb/w2v/sent_cat_central-min.png"
+           style="max-width:70%"/>
+    </center>
+
+    <p>with the central word <span class="data_text" style="font-weight:bold; color:#88bd33">cat</span>,
+      and four context words.
+      Since we are going to look at just one step, we will pick only one of the context words; for example, let's take
+      <span class="data_text" style="font-weight:bold;color:#888">cute</span>.
+
+      Then
+      <!--, using the formula for the probability \(-\log P(\color{#888}{w_{t+j}}|\color{#88bd33}{w_t}, \theta)\)
+      given in <a href="#word2vec_calculate_p">the previous section</a>, -->
+      the loss term for the central word <span class="data_text" style="font-weight:bold; color:#88bd33">cat</span>
+      and the context word <span class="data_text" style="font-weight:bold; color:#888">cute</span> is:
+
+      \[ J_{t,j}(\theta)= -\log P(\color{#888}{cute}\color{black}|\color{#88bd33}{cat}\color{black}) =
+      -\log \frac{\exp\color{#888}{u_{cute}^T}\color{#88bd33}{v_{cat}}}{
+      \sum\limits_{w\in Voc}\exp{\color{#888}{u_w^T}\color{#88bd33}{v_{cat}} }} =
+      -\color{#888}{u_{cute}^T}\color{#88bd33}{v_{cat}}\color{black}
+      + \log \sum\limits_{w\in Voc}\exp{\color{#888}{u_w^T}\color{#88bd33}{v_{cat}}}\color{black}{.}
+      \]</p>
+
+    <p> Note which parameters are present at this step:</p>
+    <ul>
+      <li>from vectors for <font color="#88bd33">central words</font>, only \(\color{#88bd33}{v_{cat}}\);</li>
+      <li>from vectors for <font color="#888">context words</font>, all \(\color{#888}{u_w}\) (for all words in
+        the vocabulary).</li>
+    </ul>
+
+    <p>Only these parameters will be updated at the current step.</p>
+
+
+    <p>Below is the schematic illustration of
+      the derivations for this step.</p>
+
+    <center>
+      <img src="/nlp-course/word_emb/w2v/one_step_alg-min.png"
+           style="max-width:90%; margin-top:15px; margin-bottom:0px;"/>
+    </center>
+
+    <br/><br/>
+
+    <img height="150" src="/nlp-course/word_emb/w2v/loss_intuition-min.png"
+         style="float:right; margin-left: 25px; max-width:60%"/>
+
+    <p>By making an update to minimize \(J_{t,j}(\theta)\), we force the parameters to
+      <font face="arial"><u>increase</u></font> similarity (dot product)
+      of \(\color{#88bd33}{v_{cat}}\) and \(\color{#888}{u_{cute}}\) and, at the same time,
+      to <font face="arial"><u>decrease</u></font>
+      similarity between \(\color{#88bd33}{v_{cat}}\) and \(\color{#888}{u_{w}}\) for all other words \(w\) in the vocabulary.</p>
+
+    <p>
+      This may sound a bit strange: why do we want to decrease similarity between \(\color{#88bd33}{v_{cat}}\)
+      and <u>all</u> other words, if some of them are also valid context words (e.g.,
+      <span class="data_text" style="font-weight:bold; color:#888">grey</span>,
+      <span class="data_text" style="font-weight:bold; color:#888">playing</span>,
+      <span class="data_text" style="font-weight:bold; color:#888">in</span> on our example sentence)?
+      <br/>
+      But do not worry: since we make updates for each context word (and for all central words in your text),
+      <u>on average over all updates</u>
+      our vectors will learn
+      the distribution of the possible contexts.</p>
+
+
+
+
+    <div class="card_with_ico">
+      <img class="ico" src="/nlp-course/ico/dumpbell_empty.png"/>
+      <div class="text_box_green">
+        <p class="data_text"> Try to derive the gradients at the final step of the illustration above.
+          <br/><br/>
+          If you get lost, you can look at the paper
+          <a href="https://arxiv.org/pdf/1411.2738.pdf"  target="_blank">Word2Vec Parameter Learning Explained</a>.</p>
+      </div>
+    </div>
+
+  </div>
+  <br/>
+
+  <div id="w2v_negative_sampling">
+    <h2 >Faster Training: Negative Sampling</h2>
+
+    <p>In the example above, for each pair of a central word and its context word, we had to update all vectors
+      for context words. This is highly inefficient: for each step, the time needed to make an update is proportional
+      to the vocabulary size.</p>
+
+
+    <p>But why do we have to consider <u>all</u> context vectors in the vocabulary at each step?
+      For example, imagine that at the current step we consider context vectors not for all words,
+      but only for the current target (<span class="data_text" style="font-weight:bold; color:#888">cute</span>)
+      and several randomly chosen words. The figure shows the intuition.</p>
+
+    <center>
+      <img src="/nlp-course/word_emb/w2v/negative_sampling-min.png"
+           style="max-width:90%; margin-top:15px; margin-bottom:15px;"/>
+    </center>
+
+    <br/>
+    <!--    <img height="150" src="/nlp-course/word_emb/w2v/loss_intuition_neg_sam-min.png"
+             style="float:right; margin-left: 25px; max-width:60%"/> -->
+
+    <p>As before, we are increasing similarity between
+      \(\color{#88bd33}{v_{cat}}\) and \(\color{#888}{u_{cute}}\). What is different, is that now we
+      decrease similarity between \(\color{#88bd33}{v_{cat}}\) and context vectors <u>not for all</u> words, but only
+      with a <u>subset of K "negative" examples</u>.</p>
+
+    <p>Since we have a large corpus, on average over all updates we will update each vector sufficient number of times,
+      and the vectors will still be able to learn the relationships between words quite well.</p>
+
+    <p>
+      Formally, the new loss function for this step is:
+      \[ J_{t,j}(\theta)=
+      -\log\sigma(\color{#888}{u_{cute}^T}\color{#88bd33}{v_{cat}}\color{black}) -
+      \sum\limits_{w\in \{w_{i_1},\dots, w_{i_K}\}}\log\sigma({-\color{#888}{u_w^T}\color{#88bd33}{v_{cat}}}\color{black}),
+      \]
+      where \(w_{i_1},\dots, w_{i_K}\) are the K negative examples chosen at this step
+      and \(\sigma(x)=\frac{1}{1+e^{-x}}\) is the sigmoid function.</p>
+
+    <p>Note that
+      \(\sigma(-x)=\frac{1}{1+e^{x}}=\frac{1\cdot e^{-x}}{(1+e^{x})\cdot e^{-x}} =
+      \frac{e^{-x}}{1+e^{-x}}= 1- \frac{1}{1+e^{x}}=1-\sigma(x)\). Then the loss can also be written as:
+      \[ J_{t,j}(\theta)=
+      -\log\sigma(\color{#888}{u_{cute}^T}\color{#88bd33}{v_{cat}}\color{black}) -
+      \sum\limits_{w\in \{w_{i_1},\dots, w_{i_K}\}}\log(1-\sigma({\color{#888}{u_w^T}\color{#88bd33}{v_{cat}}}\color{black})).
+      \]</p>
+
+    <div class="card_with_ico">
+      <img class="ico" src="/nlp-course/ico/dumpbell_empty.png"/>
+      <div class="text_box_green">
+        <p class="data_text">How the gradients and updates change when using negative sampling?</p>
+      </div>
+    </div>
+
+    <br/>
+    <h3 id="choice_of_neg_examples"><u>The Choice of Negative Examples</u></h3>
+    <p>Each word has only a few "true" contexts. Therefore, randomly chosen words are very likely to be "negative", i.e. not
+      true contexts. This simple idea is used not only to train Word2Vec efficiently but also in many other
+      applications, some of which we will see later in the course.</p>
+
+
+    <p>Word2Vec randomly samples negative examples based on the empirical distribution of words.
+      Let \(U(w)\) be a unigram distribution of words, i.e. \(U(w)\) is the frequency of the word \(w\)
+      in the text corpus. Word2Vec modifies this distribution to sample less frequent words more often:
+      it samples proportionally to \(U^{3/4}(w)\).</p>
+
+
+  </div>
+
+  <div  id="w2v_skipgram_cbow">
+    <h2>Word2Vec variants: Skip-Gram and CBOW</h2>
+
+    <p>There are two Word2Vec variants: Skip-Gram and CBOW.</p>
+
+
+    <p><u>Skip-Gram</u> is the model we considered so far: it predicts context words given the central word.
+      Skip-Gram with negative sampling is the most popular approach.</p>
+
+    <p><u>CBOW</u> (Continuous Bag-of-Words) predicts the central word from the sum of context vectors. This simple sum of
+      word vectors is called "bag of words", which gives the name for the model.</p>
+
+    <center>
+      <img src="/nlp-course/word_emb/w2v/cbow_skip-min.png"
+           style="max-width:90%; margin-top:15px; margin-bottom:15px;"/>
+    </center>
+
+
+    <div class="card_with_ico">
+      <img class="ico" src="/nlp-course/ico/dumpbell_empty.png"/>
+      <div class="text_box_green">
+        <p class="data_text">How the loss function and the gradients change for the CBOW model?
+          <br/><br/>
+          If you get lost, you can again look at the paper
+          <a href="https://arxiv.org/pdf/1411.2738.pdf" target="_blank">Word2Vec Parameter Learning Explained</a>.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="w2v_additional_notes">
+    <h2>Additional Notes</h2>
+
+    <p>The original Word2Vec papers are:</p>
+    <ul>
+      <li><a href="https://arxiv.org/pdf/1301.3781.pdf" target="_blank">Efficient Estimation of Word Representations in Vector Space</a></li>
+      <li><a href="https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf"  target="_blank">
+        Distributed Representations of Words and Phrases and their Compositionality</a></li>
+    </ul>
+    <p>You can look into them for the details on the experiments, implementation and hyperparameters. Here we will
+      provide some of the most important things you need to know.</p>
+
+
+
+    <h3><u>The Idea is Not New</u></h3>
+
+    <p>The idea to learn word vectors (distributed representations) is not new. For example, there were attempts to
+      learn word vectors as part of a larger network and then extract the embedding layer. (For the details on the
+      previous methods, you can look, for example, at the summary in the original Word2Vec papers).</p>
+
+
+    <p>What was very unexpected in Word2Vec, is its ability to learn <u>high-quality</u> word vectors
+      <u>very fast</u> on huge datasets and for
+      large vocabularies. And of course, all the fun properties we will see in the
+      <a href="#analysis_interpretability">Analysis and Interpretability</a> section quickly made Word2Vec very famous.</p>
+
+
+
+    <h3><u>Why Two Vectors?</u></h3>
+    <p>As you remember, in Word2Vec we train two vectors for each word: one when it is a central word and another
+      when it is a context word. After training, context vectors are thrown away.</p>
+
+
+    <p>This is one of the tricks that made Word2Vec so simple. Look again at the loss function (for one step):
+      \[ J_{t,j}(\theta)=
+      -\color{#888}{u_{cute}^T}\color{#88bd33}{v_{cat}}\color{black} -
+      \log \sum\limits_{w\in V}\exp{\color{#888}{u_w^T}\color{#88bd33}{v_{cat}}}\color{black}{.}
+      \]
+      When central and context words have different vectors, both the first term and dot products inside the exponents
+      are linear with respect to the parameters (the same for the negative training objective).
+      Therefore, the gradients are easy to compute.</p>
+
+    <div class="card_with_ico">
+      <img class="ico" src="/nlp-course/ico/dumpbell_empty.png"/>
+      <div class="text_box_green">
+        <p class="data_text">Repeat the derivations (loss and the gradients) for the case with one vector for each word
+          (\(\forall w \ in \ V, \color{#88bd33}{v_{w}}\color{black}{ = }\color{#888}{u_{w}}\) ). </p>
+      </div>
+    </div>
+
+    <div class="card_with_ico">
+      <img class="ico" width="40" src="/nlp-course/ico/book_empty.png"/>
+      <div class="text_box_pink">
+        <p class="data_text">
+          While the standard practice is to throw away context vectors, it was shown that
+          averaging word and context vectors may be more beneficial.
+          <a href="#papers_good_old_classics">More details are here.</a>
+        </p>
+      </div>
+    </div>
+
+    <h3><u>Better training</u></h3>
+
+    <div class="card_with_ico">
+      <img class="ico" src="/nlp-course/ico/bulb_empty.png"/>
+      <div class="text_box_yellow">
+        <p class="data_text">There's one more trick: learn more from <a href="#w2v_subsample_frequent">this exercise</a>
+          in the <a href="#research_thinking">Research Thinking</a> section. </p>
+      </div>
+    </div>
+
+
+    <h3><u>Relation to PMI Matrix Factorization</u></h3>
+
+    <div class="card_with_ico">
+      <img class="ico" width="40" src="/nlp-course/ico/book_empty.png"/>
+      <div class="text_box_pink">
+        <p class="data_text">
+          Word2Vec SGNS (Skip-Gram with Negative Sampling)
+          implicitly approximates the factorization of a (shifted) PMI matrix.
+          <a href="#papers_good_old_classics">Learn more here.</a>
+        </p>
+      </div>
+    </div>
+
+    <h3><u>The Effect of Window Size</u></h3>
+
+    <p>The size of the sliding window has a strong effect on the resulting
+      vector similarities.
+      For example, <a href="https://arxiv.org/pdf/1510.00726.pdf">this paper</a> notes that
+      larger windows tend to produce more topical similarities
+      (i.e. <font class="data_text"><strong>dog</strong></font>,
+      <font class="data_text"><strong>bark</strong></font> and
+      <font class="data_text"><strong>leash</strong></font> will be grouped together,
+      as well as
+      <font class="data_text"><strong>walked</strong></font>,
+      <font class="data_text"><strong>run</strong></font> and
+      <font class="data_text"><strong>walking</strong></font>),
+      while smaller windows tend to produce more functional and syntactic similarities
+      (i.e. <font class="data_text"><strong>Poodle</strong></font>,
+      <font class="data_text"><strong>Pitbull</strong></font>,
+      <font class="data_text"><strong>Rottweiler</strong></font>, or
+      <font class="data_text"><strong>walking</strong></font>,
+      <font class="data_text"><strong>running</strong></font>,
+      <font class="data_text"><strong>approaching</strong></font>).</p>
+
+    <h3><u>(Somewhat) Standard Hyperparameters</u></h3>
+    As always, the choice of hyperparameters usually depends on the task at hand;
+    you can look at the original papers for more details.
+    <br/><br/>
+
+    Somewhat standard setting is:
+    <ul>
+      <li><font face="arial">Model:</font> Skip-Gram with negative sampling;</li>
+      <li><font face="arial">Number of negative examples:</font> for smaller datasets, 15-20; for huge datasets
+        (which are usually used) it can be 2-5.</li>
+      <li><font face="arial">Embedding dimensionality:</font> frequently used value is 300, but other
+        variants (e.g., 100 or 50) are also possible. For theoretical explanation of the optimal dimensionality,
+        take a look at the <a href="#related_papers">Related Papers</a> section.</li>
+      <li><font face="arial">Sliding window (context) size:</font> 5-10.</li>
+    </ul>
+
+    <!--
+    <div class="card_with_ico">
+        <img class="ico" width="40" src="/nlp-course/ico/book_empty.png"/>
+        <div class="text_box_pink">
+            <p class="data_text">
+                Interestingly, different size of a context window leads to embeddings with different
+                properties.
+                    <a href="">More details are here.</a>
+            <font color="red">add link</font>
+            </p>
+        </div>
+    </div>-->
+
+    <br/>
+  </div>
+
+</div>
+
+<div id="glove">
+  <h1>GloVe: Global Vectors for Word Representation</h1>
+
+  <center>
+    <img src="/nlp-course/word_emb/glove/idea-min.png"
+         style="max-width:90%; margin-bottom:15px;"/>
+  </center>
+
+  <div>
+    <p><a href="https://www.aclweb.org/anthology/D14-1162.pdf" target="_blank">The GloVe model</a> is a combination of
+      count-based methods and prediction methods (e.g., Word2Vec). Model name, GloVe, stands
+      for "Global Vectors", which reflects its idea: the method uses
+      <font face="arial">global</font> information from corpus to <font face="arial">learn vectors</font>.</p>
+
+
+
+    <p><a href="#simple_cooccurrence">As we saw earlier</a>, the simplest count-based method uses
+      co-occurrence counts to measure the association between <font color="#88bd33">word
+        <span class="data_text" style="font-weight:bold;">w</span></font>
+      and <font color="#888">context <span class="data_text" style="font-weight:bold;">c</span></font>:
+      N(<font color="#88bd33">w</font>, <font color="#888">c</font>).
+      <!--Specifically,
+      they use
+      N(<font color="#88bd33">w</font>, <font color="#888">c</font>) - number of times
+      <font color="#88bd33">word
+      <span class="data_text" style="font-weight:bold;">w</span></font> appears in context
+      <font color="#888">context <span class="data_text" style="font-weight:bold;">c</span></font>. -->
+
+      GloVe also uses these counts to construct the loss function:</p>
+    <center>
+      <img src="/nlp-course/word_emb/glove/glove_loss-min.png"
+           style="max-width:80%; margin-bottom:15px;"/>
+    </center>
+
+    <p>Similar to Word2Vec, we also have different vectors for
+      <font color="#88bd33">central</font> and <font color="#888">context</font> words - these are our parameters.
+      Additionally, the method has a scalar bias term for each word vector.</p>
+
+    <p>
+      What is especially interesting, is the way GloVe controls the influence of rare and frequent words:
+      loss for each pair (<font color="#88bd33">w</font>, <font color="#888">c</font>) is weighted in a way that</p>
+    <ul>
+      <li>rare events are penalized,</li>
+      <li>very frequent events are not over-weighted.</li>
+    </ul>
+
+    <p class="data_text" style="color:#888;"><u>Lena:</u>
+      The loss function looks reasonable as it is, but
+      <a href="https://www.aclweb.org/anthology/D14-1162.pdf" target="_blank">the original GloVe paper</a>
+      has very nice motivation leading to the above formula. I will not provide it here
+      (I have to finish the lecture at some point, right?..), but
+      you can read it yourself - it's really, really nice!</p>
+  </div>
+</div>
+<br/>
+
+
+<div id="evaluation">
+  <h1>Evaluation of Word Embeddings</h1>
+
+  <p>How can we understand that one method for getting word embeddings is better than another?
+    There are two types of evaluation (not only for word embeddings): intrinsic and extrinsic.</p>
+
+
+  <div>
+    <h3><u>Intrinsic Evaluation</u>: Based on Internal Properties</h3>
+    <img width="40%" src="/nlp-course/word_emb/intrinsic_evaluation-min.png"
+         style="float:right; margin-left: 25px; max-width:60%"/>
+    <p>This type of evaluation looks at the internal properties of embeddings, i.e.
+      how well they capture meaning. Specifically, in the
+      <a href="#analysis_interpretability">Analysis and Interpretability</a> section,
+      we will discuss in detail how we can evaluate embeddings on word similarity and word analogy tasks.</p>
+  </div>
+
+  <div>
+    <h3><u>Extrinsic Evaluation</u>: On a Real Task</h3>
+    <img width="60%" src="/nlp-course/word_emb/extrinsic_evaluation-min.png"
+         style="float:right; margin-left: 25px; max-width:60%"/>
+
+    <p>This type of evaluation tells which embeddings are better for the task you really care about (e.g.,
+      text classification, coreference resolution, etc.).
+      <br/><br/>
+      In this setting, you have to train the model/algorithm for the real task several times: one model for each of the
+      embeddings you want to evaluate. Then, look at the quality of these models to decide which
+      embeddings are better.</p>
+  </div>
+
+  <div>
+    <h3><u>How to Choose?</u></h3>
+    <img width="60%" src="/nlp-course/word_emb/evaluation_tradeoff-min.png"
+         style="float:right; margin-left: 25px; max-width:60%"/>
+    <p>One thing you have to get used to is that there is no perfect solution and no right answer
+      for all situations: it always depends on many things.</p>
+
+    <p>Regarding evaluation, you usually care about quality of the task you want to solve. Therefore,
+      you are likely to be more interested in extrinsic evaluation. However, real-task models
+      usually require a lot of time and resources to train, and training several of them may
+      be too expensive.</p>
+    <p>In the end, this is your call to make :)</p>
+  </div>
+
+</div>
+<br/><br/>
+
+<div id="analysis_interpretability">
+  <img height="40" src="/nlp-course/ico/analysis_empty.png"
+       style="float:left; padding-right:20px; "/>
+  <h1>Analysis and Interpretability</h1>
+
+  <p class="data_text" style="color:#888;"><u>Lena:</u> For word embeddings, most of the content of
+    this part is usually considered as evaluation (intrinsic evaluation). However,
+    since looking at what a model learned (beyond task-specific metrics) is the kind of thing
+    people usually do for analysis, I believe it can be presented here, in the analysis section. </p>
+
+
+  <div id="analysis_walk_through_space">
+    <h2>Take a Walk Through Space... Semantic Space!</h2>
+
+    <p>Semantic spaces aim to create representations of natural language that capture meaning.
+      We can say that (good) word embeddings form semantic space and will refer to
+      a set of word vectors in a multi-dimensional space as "semantic space".</p>
+
+
+    <p>Below is shown semantic space formed by GloVe vectors trained on twitter data (taken from
+      <a href="https://github.com/RaRe-Technologies/gensim-data" target="_blank">gensim</a>). Vectors were
+      projected to two-dimensional space using t-SNE; these are only the top-3k most frequent words.</p>
+
+
+    <img height="20" src="/nlp-course/ico/paw_empty.png" style="float:left; margin-top:-10px;"/>
+    <div class="box_green_left">
+      <div class="text_box_green">
+
+        <p class="data_text">
+          <u>How to:</u> Walk through semantic space and try to find:</p>
+        <ul class="data_text" style="padding-right:10px;">
+          <li>language clusters: Spanish, Arabic, Russian, English. Can you find more languages?</li>
+          <li>clusters for: food, family, names, geographical locations. What else can you find?</li>
+        </ul>
+      </div>
+
+      <center>
+        <iframe frameborder="0" width="510" height="510" scrolling="no"
+                src="/nlp-course/word_emb/analysis/glove100_twitter_top3k.html">
+        </iframe>
+      </center>
+
+      <!--<p class="data_text" style="color:#aaa;font-size:13px;"><u>Lena:</u> Embeddings are from
+  <a href="https://github.com/RaRe-Technologies/gensim-data">gensim.</a></p>-->
+
+    </div>
+    <img height="20" src="/nlp-course/ico/paw_empty.png" style="float:left; margin-top:-10px;"/>
+
+  </div>
+  <br/><br/>
+
+  <div id="analysis_neighbors">
+    <h2>Nearest Neighbors</h2>
+
+    <p style="text-align: center; float: right; display: block; margin-left:25px;
+         margin-top:-10px; max-width:50%;">
+      <img src="/nlp-course/word_emb/analysis/frog-min.png" alt="" /><br />
+      <span style="font-size: small;">The example is
+        from the <a href="https://nlp.stanford.edu/projects/glove/" target="_blank">GloVe project page</a>.</span></p>
+
+    <p>During your walk through semantic space, you probably noticed that the points (vectors) which are nearby
+      usually have close meaning. Sometimes, even rare words are understood very well. Look at the example:
+      the model understood that words such as <span class="data_text" style="font-weight:bold;">leptodactylidae</span>
+      or <span class="data_text" style="font-weight:bold;">litoria</span> are close to
+      <span class="data_text" style="font-weight:bold;">frog</span>.</p>
+
+    <br/>
+
+
+
+    <p style="text-align: center; float: right; display: block; margin-left:25px; max-width:30%;">
+      <img src="/nlp-course/word_emb/analysis/rare_words-min.png" alt="" /><br />
+      <span style="font-size: small;">Several pairs from the
+        <a href="https://nlp.stanford.edu/~lmthang/data/papers/conll13_morpho.pdf" target="_blank">
+                    Rare Words similarity benchmark</a>.</span></p>
+
+    <h3><u>Word Similarity Benchmarks</u></h3>
+    <p>"Looking" at nearest neighbors (by cosine similarity or Euclidean distance) is one of the
+      methods to estimate the quality of the learned embeddings. There are several
+      <font face="arial">word similarity</font> benchmarks (test sets). They consist
+      of word pairs with a similarity score according to human judgments.
+      The quality of embeddings is estimated as
+      the correlation between the two similarity scores (from model and from humans).</p>
+
+  </div>
+  <br/>
+
+  <div id="analysis_linear_structure">
+    <h2>Linear Structure</h2>
+
+    <p>While similarity results are encouraging, they are not surprising: all in all,
+      the embeddings were trained specifically to reflect word similarity.
+      What is surprising, is that many semantic and syntactic <u>relationships between words
+        are (almost) linear</u> in word vector space.</p>
+
+    <img src="/nlp-course/word_emb/analysis/king_example-min.png" alt=""
+         style="float:right; width: 50%; margin-left: 20px; margin-top: 10px;"/>
+
+
+    <p>For example, the difference between
+      <span class="data_text" style="font-weight:bold;">king</span> and
+      <span class="data_text" style="font-weight:bold;">queen</span>
+      is (almost) the same as between
+      <span class="data_text" style="font-weight:bold;">man</span>
+      and <span class="data_text" style="font-weight:bold;">woman.</span>
+      Or a word that is similar to
+      <span class="data_text" style="font-weight:bold;">queen</span>
+      in the same sense that
+      <span class="data_text" style="font-weight:bold;">kings</span> is similar to
+      <span class="data_text" style="font-weight:bold;">king</span> turns out to be
+      <span class="data_text" style="font-weight:bold;">queens</span>.
+
+      The
+      <span class="data_text" style="font-weight:bold;">man-woman</span> \(\approx\)
+      <span class="data_text" style="font-weight:bold;">king-queen</span> example
+      is probably the most popular one, but there are also many other relations and funny examples.</p>
+
+
+
+    <p>Below are examples for the country-capital relation <!--(from
+        <a href="https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf"
+        target="_blank">this Word2Vec paper</a>) -->
+      and a couple of syntactic relations.</p>
+
+    <center>
+      <img src="/nlp-course/word_emb/analysis/examples_both-min.png" alt=""
+           style="width: 100%; margin: 10px;"/>
+    </center>
+
+    <div class="card_with_ico">
+      <img class="ico" width="40" src="/nlp-course/ico/book_empty.png"/>
+      <div class="text_box_pink">
+        <p class="data_text">
+          At ICML 2019, it was shown that there's actually a theoretical explanation for
+          analogies in Word2Vec.
+          <a href="#papers_theory">More details are here.</a>
+          <br/><br/>
+          <font color="#888"> <u>Lena:</u> This paper,
+            <a href="https://arxiv.org/pdf/1901.09813.pdf" target="_blank">
+              Analogies Explained: Towards Understanding Word Embeddings</a>
+            by Carl Allen and Timothy Hospedales from the University of Edinburgh, received
+            Best Paper Honourable Mention award at ICML 2019 - well deserved!</font>
+        </p>
+      </div>
+    </div>
+
+
+
+    <h3><u>Word Analogy Benchmarks</u></h3>
+
+    <p>These near-linear relationships inspired a new type of evaluation:
+      word analogy evaluation.</p>
+
+    <center>
+      <img src="/nlp-course/word_emb/analysis/analogy_task_v2-min.png" alt=""
+           style="width: 70%; margin: 10px;"/>
+    </center>
+
+
+    <p style="text-align: center; float: right; display: block;
+        margin-bottom:20px; margin-left:25px; max-width:60%;">
+      <img src="/nlp-course/word_emb/analysis/analogy_testset-min.png" alt="" /><br />
+      <span style="font-size: small;">Examples of relations and word pairs from
+        <a href="https://arxiv.org/pdf/1301.3781.pdf" target="_blank">
+                    the Google analogy test set</a>.</span></p>
+
+    <p>Given two word pairs for the same relation, for example
+      <span class="data_text" style="font-weight:bold;">(man, woman)</span> and
+      <span class="data_text" style="font-weight:bold;">(king, queen)</span>,
+      the task is to check if we can identify one of the words based on the rest of them.
+      Specifically, we have to check if the closest vector to
+      <span class="data_text" style="font-weight:bold;">king - man + woman</span>
+      corresponds to the word
+      <span class="data_text" style="font-weight:bold;">queen</span>.</p>
+
+
+    <p>Now there are several analogy benchmarks; these include
+      the standard benchmarks (<a href="https://www.aclweb.org/anthology/N13-1090.pdf" target="_blank">MSR</a> +
+      <a href="https://arxiv.org/pdf/1301.3781.pdf" target="_blank">Google analogy</a> test sets) and
+      <a href="https://www.aclweb.org/anthology/N16-2002.pdf" target="_blank">BATS (the Bigger Analogy Test Set)</a>.</p>
+
+  </div>
+  <br/>
+
+  <div  id="analysis_cross_lingual">
+    <h2>Similarities across Languages</h2>
+
+    <p>We just saw that some relationships between words are (almost) linear in the embedding space.
+      But what happens across languages? Turns out, relationships between semantic spaces are also
+      (somewhat) linear: you can linearly map one semantic space to another so that
+      corresponding words in the two languages match in the new, joint semantic space.</p>
+
+    <center>
+      <img src="/nlp-course/word_emb/analysis/cross_lingual_matching-min.png" alt=""
+           style="width: 100%; margin: 10px;"/>
+    </center>
+
+
+    <p>The figure above illustrates <a href="https://arxiv.org/pdf/1309.4168.pdf" target="_blank">the approach proposed
+      by Tomas Mikolov et al. in 2013</a> not long after the original Word2Vec. Formally,
+      we are given a set of word pairs and their vector representations
+      \(\{\color{#88a635}{x_i}\color{black}, \color{#547dbf}{z_i}\color{black} \}_{i=1}^n\),
+      where \(\color{#88a635}{x_i}\) and \(\color{#547dbf}{z_i}\)
+      are vectors for i-th word in the source language and its translation in the target.
+      We want to find a transformation matrix W such that \(W\color{#547dbf}{z_i}\) approximates \(\color{#88a635}{x_i}\)
+      : "matches" words from the dictionary.
+      We pick \(W\) such that
+      \[W = \arg \min\limits_{W}\sum\limits_{i=1}^n\parallel W\color{#547dbf}{z_i}\color{black} - \color{#88a635}{x_i}\color{black}\parallel^2,\]
+      and learn this matrix by gradient descent.</p>
+
+    <p>In the original paper, the initial vocabulary consists of the 5k most frequent words with their translations,
+      and the rest is learned.</p>
+
+
+    <div class="card_with_ico">
+      <img class="ico" width="40" src="/nlp-course/ico/book_empty.png"/>
+      <div class="text_box_pink">
+        <p class="data_text">
+          Later it turned out, that we don't need a dictionary at all -
+          we can build a mapping between semantic spaces even
+          if we know <u>nothing</u> about languages! <a href="#papers_cross_lingual">More details are
+          here.</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card_with_ico">
+      <img class="ico" width="40" src="/nlp-course/ico/book_empty.png"/>
+      <div class="text_box_pink">
+        <p class="data_text">
+          Is the "true" mapping between languages indeed linear, or more complicated?
+          We can look at geometry of the learned semantic spaces and check.
+          <a href="#papers_analyzing_geometry">More details are
+            here.</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card_with_ico">
+      <img class="ico" src="/nlp-course/ico/bulb_empty.png"/>
+      <div class="text_box_yellow">
+        <p class="data_text">
+          The idea to linearly map different embedding sets to (nearly) match them can also be used
+          for a very different task!
+          Learn more <!--from <a href="#research_meaning_shift">this exercise</a>-->
+          in the <a href="#research_thinking">Research Thinking</a> section. </p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+

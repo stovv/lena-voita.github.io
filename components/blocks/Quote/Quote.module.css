@@ -1,0 +1,27 @@
+.root {
+    padding: 10px 0px 10px 20px;
+}
+
+.wrapper {
+    background-color: var(--green-bg);
+    padding: 5px 5px 5px 10px;
+    width: 100%;
+    overflow: hidden;
+    border-left: 5px solid var(--green-border);
+}
+
+.wrapper q p {
+    margin: 0;
+}
+
+.wrapper q::before, .root q::after {
+    display: none;
+}
+
+
+@media screen and (max-width: 910px){
+    .root {
+        width: 95%;
+        max-width: 95%;
+    }
+}

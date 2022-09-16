@@ -3,3 +3,35 @@
     border-radius: 16px;
     padding: 20px;
 }
+
+.rect {
+    border-radius: 0;
+    transition: all .3s ease-in-out;
+    padding: 10px;
+}
+
+.static {
+
+}
+
+.rect:not(.static):not(.rect:hover) {
+    box-shadow: none !important;
+}
+
+.link {
+    background-image: var(--link-border-none);
+}
+
+.link, .link * {
+    cursor: pointer;
+}
+
+.root:has(.right) {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right {
+    width: 40px;
+    align-self: flex-end;
+}

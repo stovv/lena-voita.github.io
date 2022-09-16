@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '~/store';
 import { ui } from '~/store/actions';
 import kebabCase from 'lodash/kebabCase';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { FiAlignLeft, FiArrowLeft } from 'react-icons/fi';
 
 export const ContentTableLi = ({
     children,
@@ -52,7 +53,23 @@ export const ContentTableLi = ({
 };
 
 const ContentTable = ({ children }: PropsWithChildren) => {
-    return <div className={styles.root}>{children}</div>;
+    const [opened, setOpened] = useState(false);
+
+    return (
+        <>
+            <div className={styles.mini}>
+                <button className={styles.openButton} onClick={() => setOpened(true)}>
+                    <FiAlignLeft size={32} />
+                </button>
+            </div>
+            <div className={cls([styles.root, [styles.opened, opened]])}>
+                <button className={styles.closeButton} onClick={() => setOpened(false)}>
+                    <FiArrowLeft size={32} />
+                </button>
+                {children}
+            </div>
+        </>
+    );
 };
 
 export default ContentTable;

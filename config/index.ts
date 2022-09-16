@@ -31,7 +31,7 @@ export default {
         ],
     },
     footer: {
-        right: `Last updated by `,
+        right: `Last updated by ${process.env.NEXT_PUBLIC_DATE}`,
         icons: [
             {
                 to: links.uvaUrlLena,

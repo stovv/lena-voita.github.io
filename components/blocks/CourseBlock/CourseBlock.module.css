@@ -1,0 +1,40 @@
+.divider {
+    margin-right: 20px;
+}
+
+@media screen and (max-width: 900px){
+    .root {
+        flex-direction: column;
+    }
+
+    .left {
+        max-width: unset !important;
+        width: 100%;
+    }
+
+    .right {
+        width: 100%;
+        max-width: unset !important;
+    }
+
+    .line {
+        flex-direction: column;
+    }
+
+    .divider {
+        width: 100%;
+        flex-direction: row;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .divider img + div , .divider div:first-child + div {
+        width: 99%;
+        height: 2px;
+        min-height: 2px;
+    }
+
+    .divider img {
+        transform: rotate(270deg);
+    }
+}

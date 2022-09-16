@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -22,6 +22,6 @@
     },
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "config"],
+  "include": ["next-env.d.ts", "extra-types.d.ts","**/*.ts", "**/*.tsx", "config"],
   "exclude": ["node_modules", ".next", "out"]
 }

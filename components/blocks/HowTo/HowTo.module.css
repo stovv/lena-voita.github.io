@@ -1,0 +1,11 @@
+.root {
+    position: relative;
+}
+
+.wrapper {
+    border: 1px solid var(--yellow);
+}
+
+.title {
+    position: absolute;
+}

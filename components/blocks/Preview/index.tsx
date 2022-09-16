@@ -30,6 +30,10 @@ const Preview = ({ title, children, paper, link, code, date }: PropsWithChildren
                         view code
                     </Button>
                 )}
+
+                <Button link={code} icon={'MdCode'}>
+                    view code
+                </Button>
             </div>
             {date && (
                 <span className={styles.year}>

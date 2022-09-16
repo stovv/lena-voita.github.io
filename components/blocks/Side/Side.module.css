@@ -1,6 +1,19 @@
+@value gap: 20px;
+
+@value main-lg: calc(90% - gap / 2);
+@value main-default: calc(70% - gap / 2);
+@value main-md: calc(50% - gap / 2);
+@value main-sx: calc(30% - gap / 2);
+
+@value side-lg: calc(100% - main-lg - gap / 2);
+@value side-default: calc(100% - main-default - gap / 2);
+@value side-md: calc(100% - main-md - gap / 2);
+@value side-sx: calc(100% - main-sx - gap / 2);
+
 .root {
     display: flex;
     justify-content: space-between;
+    gap: gap;
 }
 
 .reversed {
@@ -8,31 +21,87 @@
 }
 
 
+/* main */
 .main {
     width: 100%;
-    max-width: 80%;
-    flex-shrink: 0;
+    overflow: hidden;
+    max-width: main-default;
 }
 
-.lg {
-    max-width: 90%;
+.lg .main {
+    max-width: main-lg;
 }
 
-.md {
-    max-width: 50%;
+.md .main {
+    max-width: main-md;
 }
 
-.sx {
-    max-width: 30%;
+.sx .main {
+    max-width: main-sx;
 }
 
+/* side */
 .side {
     display: flex;
-    width: 100%;
     justify-content: flex-end;
     align-items: flex-start;
+    width: 100%;
+    min-width: 50px;
+    max-width: side-default;
+    overflow: hidden;
 }
+
+.lg .side {
+    min-width: 40px;
+    max-width: side-lg;
+}
+
+.md .side {
+    min-width: 100px;
+    max-width: side-md;
+}
+
+.sx .side {
+    min-width: 200px;
+    max-width: side-sx;
+}
+
 
 .reversed .side {
     justify-content: flex-start;
+}
+
+
+@media screen and (max-width: 700px) {
+    .reverseOnResponsible {
+
+    }
+
+    .root {
+        gap: 10px;
+        flex-wrap: wrap-reverse;
+    }
+
+
+    .main, .lg:not(.nowrap) .main, .md:not(.nowrap) .main, .sx:not(.nowrap) .main {
+        max-width: none;
+    }
+
+
+    .nowrap .main {
+        max-width: main-default;
+    }
+
+    .side, .lg:not(.nowrap) .side, .md:not(.nowrap) .side, .sx:not(.nowrap) .side {
+        max-width: none;
+    }
+
+    .nowrap .side {
+        max-width: side-default;
+    }
+}
+
+
+.nowrap {
+    flex-wrap: nowrap;
 }

@@ -1,5 +1,5 @@
 import styles from './Header.module.css';
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useCallback, useState } from 'react';
 import { cls } from '~/tools';
 import Link from 'next/link';
 import config from '~/config';
@@ -13,6 +13,10 @@ const Header = ({ hide }: PropsWithChildren<HeaderProps>) => {
     const router = useRouter();
     const [opened, setOpen] = useState(false);
 
+    const click = useCallback(() => {
+        setTimeout(() => setOpen(false), 600);
+    }, []);
+
     return (
         <header className={cls([styles.header, [styles.hidden, hide]])}>
             <div className={styles.wrapper}>
@@ -22,7 +26,7 @@ const Header = ({ hide }: PropsWithChildren<HeaderProps>) => {
                 <nav className={cls([styles.navigation, [styles.opened, opened]])}>
                     <ul>
                         {config.header.links.map(({ to, title }) => (
-                            <li key={to}>
+                            <li key={to} onClick={click}>
                                 <Link href={to}>
                                     <a className={cls([[styles.active, router.asPath === to]])}>{title}</a>
                                 </Link>

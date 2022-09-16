@@ -5,6 +5,7 @@
     white-space: nowrap;
     border-radius: 3px;
     transition: none;
+    background-image: var(--link-border-none);
 }
 
 .root::after {

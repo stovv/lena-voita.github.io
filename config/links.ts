@@ -1,4 +1,4 @@
-export const baseUrl = 'http://localhost:3000';
+export const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://stovv.github.io';
 
 export default {
     yandexResearchMain: 'https://research.yandex.com',
